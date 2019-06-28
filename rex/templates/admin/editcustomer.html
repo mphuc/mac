@@ -1,0 +1,231 @@
+{% extends "layout_admin.html" %}
+{% block title %}Edit Customer{% endblock %}
+
+{% block js %}
+    
+    <script type="text/javascript">
+        $('#frmChangePasswordr').click(function(evt) {
+            $.ajax({
+                url: "/admin/updatePassword",
+                data: {
+                    wallet : $('#new_wallet').val(),
+                    password: $('#new_password').val(),
+                    repeat_password: $('#repeat_new_password').val(),
+                    user_id: $('#user_id').val(),
+                    email : $('#new_email').val(),
+                    telephone : $('#new_telephone').val()
+                },
+                type: "POST",
+               
+                success: function(data) {
+                  
+                    var data = $.parseJSON(data);
+                    data.status == 'error' ? (
+                        showNotification('top', 'right', data.message, 'danger')
+                    ) : (
+                        showNotification('top', 'right', data.message, 'success'),
+                        $('#new_password').val(''),
+                        $('#repeat_new_password').val('')
+                    )
+                }
+            });
+        });
+
+        $('#UpdatesPnode').click(function(evt) {
+            $.ajax({
+                url: "/admin/updateSponsor",
+                data: {
+                    p_node: $('#p_node').val(),
+                    user_id: $('#user_id').val()
+                },
+                type: "POST",
+                success: function(data) {
+                    var data = $.parseJSON(data);
+                    data.status == 'error' ? (
+                        showNotification('top', 'right', data.message, 'danger')
+                    ) : (
+                        showNotification('top', 'right', data.message, 'success')
+                    )
+                }
+            });
+        });
+        $('#checkPbinary').click(function(evt) {
+            $.ajax({
+                url: "/admin/updatePbinary",
+                data: {
+                    p_binary: $('#p_binary').val(),
+                    user_id: $('#user_id').val()
+                },
+                type: "POST",
+                success: function(data) {
+                    var data = $.parseJSON(data);
+                    data.status == 'error' ? (
+                        showNotification('top', 'right', data.message, 'danger')
+                    ) : (
+                        showNotification('top', 'right', data.message, 'success')
+                    )
+                }
+            });
+        });
+        function showNotification(from, align, msg, type) {
+                /* type = ['','info','success','warning','danger','rose','primary'];*/
+                var color = Math.floor((Math.random() * 6) + 1);
+                $.notify({
+                    icon: "notifications",
+                    message: msg
+                }, {
+                    type: type,
+                    timer: 3000,
+                    placement: {
+                        from: from,
+                        align: align
+                    }
+                });
+            }
+    </script>
+
+
+{% endblock %}
+
+
+{% block main %}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="content">            
+               <h4 class="title">Update infomation: {{data.user['username']}}</h4>
+               <form  action="/admin/customer/{{data.user_id}}" enctype="multipart/form-data" method="post">
+
+                  <div class="content">
+                     <div class="f-fl" style="margin-bottom: 30px">
+                        <p class="step-title ng-binding">Basic Information</p>
+                     </div>
+
+                     <div class="row" style="margin-bottom: 10px">
+                        <label class="col-md-2 control-label text-right" for="Comm_Type"> First Name</label>
+                        <div class="col-md-6">
+                           <input class="form-control" value="{{data.user['personal_info']['firstname']}}" required="true" name="firstname" type="text" >
+                        </div>
+                     </div>
+                     <div class="row" style="margin-bottom: 10px">
+                        <label class="col-md-2 control-label text-right" for="Comm_Type"> Last Name</label>
+                        <div class="col-md-6">
+                           <input class="form-control" value="{{data.user['personal_info']['lastname']}}" required="true" name="lastname" type="text" >
+                        </div>
+                     </div>
+                     <div class="row" style="margin-bottom: 10px">
+                        <label class="col-md-2 control-label text-right" for="Comm_Type"> Date of birth</label>
+                        <div class="col-md-6">
+                           <input class="form-control" value="{{data.user['personal_info']['date_birthday']}}" required="true" name="date_birthday" type="date" >
+                        </div>
+                     </div>
+
+                     <div class="f-fl" style="margin-bottom: 30px; margin-top: 50px">
+                        <p class="step-title ng-binding">Residential address</p>
+                     </div>
+                     
+                     <div class="row" style="margin-bottom: 10px">
+                        <label class="col-md-2 control-label text-right" for="Comm_Type"> Address</label>
+                        <div class="col-md-8">
+                           <textarea style="height: 60px;" class="form-control" required="true" name="address">{{data.user['personal_info']['address']}}</textarea>
+                        </div>
+                     </div>
+                     <div class="row" style="margin-bottom: 10px">
+                        <label class="col-md-2 control-label text-right" for="Comm_Type"> Postal Code</label>
+                        <div class="col-md-6">
+                           <input class="form-control" value="{{data.user['personal_info']['postalcode']}}" required="true" name="postalcode" type="text" >
+                        </div>
+                     </div>
+                     <div class="row" style="margin-bottom: 10px">
+                        <label class="col-md-2 control-label text-right" for="Comm_Type"> City</label>
+                        <div class="col-md-6">
+                           <input class="form-control" value="{{data.user['personal_info']['city']}}" required="true" name="city" type="text" >
+                        </div>
+                     </div>
+                     <div class="row" style="margin-bottom: 10px">
+                        <label class="col-md-2 control-label text-right" for="Comm_Type"> Country</label>
+                        <div class="col-md-6">
+                           <select class="form-control" name="country" required="required" >
+                              <option value="">Please select a country</option>
+                              {% for item in data.data_country %} 
+                              <option {% if data.user['personal_info']['country'] == item.country_name %} selected="selected" {% endif %}
+                                  data-id="{{item.dialling_code}}" value="{{item.country_name}}">{{item.country_name}}</option>
+                              {% endfor %} 
+                           </select>
+                        </div>
+                     </div>
+
+                     <div class="f-fl" style="margin-bottom: 30px; margin-top: 50px">
+                        <p class="step-title ng-binding">User</p>
+                     </div>
+
+                     <div class="row" style="margin-bottom: 10px">
+                        <label class="col-md-2 control-label text-right" for="Comm_Type"> New Password</label>
+                        <div class="col-md-6">
+                           <input class="form-control" value="" name="password" type="text" >
+                        </div>
+                     </div>
+
+                     <div class="row" style="margin-bottom: 10px;display: none;" style="">
+                        <label class="col-md-2 control-label text-right" for="Comm_Type"> Balance</label>
+                        <div class="col-md-6">
+                           <input class="form-control" value="{{data.user['balance_wallet']}}" name="balance_wallet" type="text" >
+                        </div>
+                     </div>
+
+                     <div class="row" style="margin-bottom: 10px">
+                        <label class="col-md-2 control-label text-right" for="Comm_Type"> Active Register</label>
+                        <div class="col-md-6">
+                           <select name="active_email" class="form-control" required="true">
+                                <option {% if data.user['active_email'] == 0 %} selected="selected" {% endif %} value="0">Disable</option>
+                                <option {% if data.user['active_email'] == 1 %} selected="selected" {% endif %} value="1">Enlable</option>
+                           </select>
+                        </div>
+                     </div>
+
+
+                     <div class="row" style="margin-bottom: 10px">
+                        <label class="col-md-2 control-label text-right" for="Comm_Type"> Status Authen  </label>
+                        <div class="col-md-6">
+                           <select name="status_2fa" class="form-control" required="true">
+                                <option {% if data.user['status_2fa'] == 0 %} selected="selected" {% endif %} value="0">Disable</option>
+                                <option {% if data.user['status_2fa'] == 1 %} selected="selected" {% endif %} value="1">Enlable</option>
+                           </select>
+                        </div>
+                     </div>
+                      
+
+
+                        
+                     <input type="hidden" name="token_crt" value="{{data.token_crt}}">
+                     
+                  </div>
+
+                  <div class="text-center">
+                        <button type="submit" class="btn btn-rose btn-fill btn-wd">Update</button>
+                     </div>
+               </form>
+
+
+
+
+
+
+
+              
+               
+            </div>
+            <!-- end content-->
+        </div>
+        <!--  end card  -->
+    </div>
+    <!-- end col-md-12 -->
+</div>
+<div class="row" style="display: none;" >
+    
+</div>
+
+{% endblock %}
+

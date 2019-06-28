@@ -1,0 +1,241 @@
+{% extends "layout.html" %}
+{% block title %}Withdraw{% endblock %}
+{% block css %}
+<link href="/static/assets/css/jstree.css" rel="stylesheet" >
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+   $('#currency_change').on('change',function(){
+      
+         if ($(this).val() == 'BTC')
+         {
+            $('#address_input').val($('.bitcoin_address').val())
+         }
+         else
+         {
+            $('#address_input').val($('.ethereum_address').val())
+         }
+   })
+</script>
+
+{% if data.val_amount_usd != '' or data.val_wallet != '' or data.val_authen != '' or data.val_balance != '' or data.val_amount_max != '' %}
+   <div class="alert alert-danger">
+      <span class="badge badge-pill badge-danger">Error</span>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">×</span>
+      </button>
+      <hr>
+
+      {% if data.val_wallet == 'empty' %}
+      <script type="text/javascript">
+          $().toastmessage('showToast',{
+                text     : "Please enter your address wallet.",
+                sticky   : false,
+                position : 'top-right',
+                type     : 'error'
+            } );
+      </script>
+      {% endif %}
+      {% if data.val_amount_usd == 'empty' %}
+      <script type="text/javascript">
+          $().toastmessage('showToast',{
+                text     : "Minimum withdrawal amount is $ 10",
+                sticky   : false,
+                position : 'top-right',
+                type     : 'error'
+            } );
+      </script>
+      {% endif %}
+     
+      {% if data.val_authen == 'empty' %}
+      <script type="text/javascript">
+          $().toastmessage('showToast',{
+                text     : "Please enter your authen code.",
+                sticky   : false,
+                position : 'top-right',
+                type     : 'error'
+            } );
+      </script>
+      {% endif %}
+      {% if data.val_authen == 'not' %}
+      <script type="text/javascript">
+          $().toastmessage('showToast',{
+                text     : "Authen code is incorrect. Please check again.",
+                sticky   : false,
+                position : 'top-right',
+                type     : 'error'
+            } );
+      </script>
+      {% endif %}
+      {% if data.val_wallet == 'not' %}
+      <script type="text/javascript">
+          $().toastmessage('showToast',{
+                text     : "The address you entered is incorrect. Please check again.",
+                sticky   : false,
+                position : 'top-right',
+                type     : 'error'
+            } );
+      </script>
+      {% endif %}
+      
+      {% if data.val_balance == 'not' %}
+      <script type="text/javascript">
+          $().toastmessage('showToast',{
+                text     : "Account Balance is not enough to set the command. Please try again.",
+                sticky   : false,
+                position : 'top-right',
+                type     : 'error'
+            } );
+      </script>
+      {% endif %}
+
+      {% if data.val_amount_max != '' %}
+      <script type="text/javascript">
+          $().toastmessage('showToast',{
+                text     : "The maximum withdrawal amount is $ {{data.val_amount_max}}.",
+                sticky   : false,
+                position : 'top-right',
+                type     : 'error'
+            } );
+      </script>
+      {% endif %}
+   </div>
+{% endif %}
+
+
+{% if data.val_withdraw == 'complete'  %}
+<script type="text/javascript">
+          $().toastmessage('showToast',{
+                text     : "Successful withdrawal.",
+                sticky   : false,
+                position : 'top-right',
+                type     : 'success'
+            } );
+      </script>
+   
+{% endif %}
+
+{% endblock %}
+{% block main %}
+<div class="section__content section__content--p30">
+   <div class="card">
+      <div class="card-header">
+         <strong class="card-title">WITHDRAW</strong>
+      </div>
+      <div class="card-body">
+         {% if data.statrus_withdraw == False%}
+         <div class="alert alert-danger alert-dismissable">
+            <h4><strong>Notice</strong></h4>
+            <p>Withdrawal only on 08th and 18th and 28th of each month. You come back later, please !</p>
+         </div>
+         {% endif %}
+         {% if data.statrus_withdraw == True%}
+         <form action="" method="post" class="form-horizontal form-bordered form-account">
+            <div class="form-group">
+            
+               <div class="clearfix"></div>
+               <div class="row">
+                  <label class="col-md-3 control-label" for="Comm_Type"> Total Balance<span class="text-danger">*</span></label>
+                  <div class="col-md-6">
+                     <select id="Comm_Type" name="Comm_Type" class="form-control">
+                        <option value="1" selected="">Balance-wallet (${{data.user['balance_wallet'] | format_usd}})</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="row" style="margin-top: 15px;">
+                  <label class="col-md-3 control-label" for="Comm_Money">Currency <span class="text-danger">*</span></label>
+                  <div class="col-md-6">
+                     <select id="currency_change" name="currency" class="form-control">
+                        <option value="BTC">Bitcoin</option>
+                        <option value="ETH">Ethereum</option>
+                     </select>
+                  </div>
+               </div>
+               <input type="hidden" class="bitcoin_address" value="{{data.user['wallet']['bitcoin']['address']}}">
+               <input type="hidden" class="ethereum_address" value="{{data.user['wallet']['ethereum']['address']}}">
+               <div class="row" style="margin-top: 15px;">
+                  <label class="col-md-3 control-label" for="Comm_Money">Address <span class="text-danger">*</span></label>
+                  <div class="col-md-6">
+                     <input id="address_input" type="text" value="{{data.user['wallet']['bitcoin']['address']}}"  placeholder="Address" name="address" class="form-control" >
+                  </div>
+               </div>
+               <div class="row" style="margin-top: 15px;">
+                  <label class="col-md-3 control-label" for="Comm_Money">Quantity <span class="text-danger">*</span></label>
+                  <div class="col-md-6">
+                     <input type="text"  placeholder="Quantity" name="quantity" class="form-control" >
+                  </div>
+               </div>
+            </div>
+            <input type="hidden" name="token_crt" value="{{data.token_crt}}">
+            <div class="form-group form-actions">
+               <div class="row" style="">
+                  <label class="col-md-3 control-label" for="Comm_Money">Two-factor Auth <span class="text-danger">*</span></label>
+                  <div class="col-md-6">
+                     <input type="text"  placeholder="Two-factor Auth" name="authen" class="form-control" >
+                  </div>
+               </div>
+               
+            </div>
+            <div class="form-group form-actions">
+               <div class="row" style="margin-top: 15px;">
+                  <div class="col-md-12 text-center">
+                     <button type="submit" name="submit_transfer" class="btn btn-effect-ripple btn-primary" style="position: relative;">Withdraw</button>
+                  </div>
+               </div>
+            </div>
+         </form>
+         {% endif %}
+      </div>
+   </div>
+</div>
+<div class="section__content section__content--p30">
+   <div class="card">
+      <div class="card-header">
+         <strong class="card-title">WITHDRAW HISTORY</strong>
+      </div>
+      <div class="card-body">
+         <div class="">
+            <div class="material-datatables">
+               <table id="datatables_deposit" class="table table-bordered" style="width:100%;cellspacing:0">
+                  <thead>
+                     <tr>
+                        <th>No.</th>
+                        <th>Datetime</th>
+                        <th>Amount</th>
+                        <th>Currency</th>
+                        <th>Amount USD</th>
+                        <th>Status</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {% if data.withdrawa %}
+                     {% for item in data.withdrawa %}
+                     <tr>
+                        <td></td>
+                        <td>{{ item.date_added | format_date }}</td>
+                        <td>{{ item.amount_curency }}</td>
+                        <td>{{ item.type }}</td>
+                        <td>{{ item.amount | format_usd }}</td>
+                        <td class="text-center">
+                           {% if item.status == 0 %}
+                           <span class="label label-warning">Warning</span>
+                           {% endif %}
+                           {% if item.status == 1 %}
+                           <span class="label label-success">Finish</span>
+                           {% endif %}
+                        </td>
+                     </tr>
+                     {% endfor %}
+                     {% endif %}
+                  </tbody>
+                  <tfoot>
+                     <th colspan="4" class="text-right">Total</th>
+                     <th colspan="2" class="text-left"></th>
+                  <tfoot>
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

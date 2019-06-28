@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block title %}System{% endblock %}
+{% block css %}
+
+{% endblock %}
+{% block js %}
+
+{% endblock %}
+	
+
+{% block main %}
+
+
+<div class="section__content section__content--p30">
+   <div class="card">
+      <div class="card-header">
+         <strong class="card-title">Member - <span style="color: #093454;">{{data.count_f1}} F1 Active</span></strong>
+      </div>
+      <div class="card-body">
+         <div class="">
+            <div class="material-datatables">
+              
+               <table id="" class="table table-bordered datatables_referrals" style="width:100%;cellspacing:0">
+                  <thead>
+                     <tr>
+                        <th>No.</th>
+                        <th>Floor</th>
+                        <th>Join Date</th>
+                        <th>Email</th>
+                        <th>Country</th>
+                        <th>Package</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {% if data.list_member %}
+                     {% for item in data.list_member %}
+                     <tr>
+                        <td></td>
+                        <td>{{ item.floor }}</td>
+                        <td>{{ item.creation | format_date }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>{{ item.country }}</td>
+                        <td>${{ item.investment | format_usd }}</td>
+                     </tr>
+                     {% endfor %}
+                     {% endif %}
+                  </tbody>
+               </table>
+            </div>
+
+            
+            </div>
+         </div>
+      </div>
+</div>
+
+
+{% endblock %}
+

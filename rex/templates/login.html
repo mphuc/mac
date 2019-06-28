@@ -1,0 +1,169 @@
+
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login</title>
+<link rel="icon" href="/static/home/images/favicon.png" type="image/png">
+<link href="/static/toastmessage/static/css/jquery.toastmessage.css" rel="stylesheet" >
+<link rel="stylesheet" href="/static/home/css/all-stylesheets.css" type="text/css" />
+</head>
+<body class="login-page">
+<div class="page-loader-wrapper page-loader-wrapper-1"> 
+      <div class="loader">
+         <div class="stick1"></div>
+         <div class="stick2"></div>
+         <div class="stick3"></div>
+         <div class="stick4"></div>
+        <!--loader-->    
+      </div>
+    <!--page-loader-wrapper-->    
+   </div>
+<!--====================================-->
+<!--============== Login ===============--> 
+<!--====================================-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="main-login">
+  <div class="row">
+  <div class="login-banner col-lg-5 col-md-5 col-sm-12 col-xs-12">
+   <div class="row">
+    <div class="darkBlueBg login-box regular-font text-center col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div>
+        <figure><a href="/"><img width="300" src="/static/img/logo.png" class="logo" alt="logo2" /></a></figure>
+        <h1>login</h1>
+         
+         <form class="form-horizontal" role="form" name="login" action="/auth/login" method="POST">
+  <div class="form-group">
+    <div class="login-field pull-left">
+     <i class="fa fa-envelope-o pull-left"></i>
+      <input type="email" class="form-control pull-left" name="username" id="Username" placeholder="Your login email">
+      <!--login-field-->
+    </div>
+    <!--form-group-->
+  </div>
+  <div class="form-group">
+    <div class="login-field pull-left">
+     <i class="fa fa-key pull-left"></i>
+      <input type="password" class="form-control pull-left" name="password" id="pwd" placeholder="Your login password">
+      <!--login-field-->
+    </div>
+    <!--form-group-->
+  </div>
+
+  <div class="form-group"  style="float: left;width: 100%; margin-bottom: 10px;">
+      <script src='https://www.google.com/recaptcha/api.js'></script> 
+      <div class="capcha-google text-center" style="width:240px; margin-bottom:15px;margin: 0 auto; display: block">
+         <div class="g-recaptcha" data-theme="light" data-sitekey="6LcESjUUAAAAAN0l4GsSiE2cLLZLZQSRZsEdSroE"></div>
+      </div>
+   </div>
+      <button type="submit" class="login-btn">login</button>
+      
+      <div class="remember">
+      <div class="checkbox">
+        <label><input type="checkbox"> Remember me</label>
+        <a href="/auth/reset-password">Forgot password</a>
+        <!--checkbox-->
+      </div>
+      <!--remember-->
+      </div>
+</form>
+         <p>© MacKay Shields 2019.   All rights reserved.</p>
+         
+      </div>
+      <!--darkBlueBg--> 
+    </div>  
+    <!--row--> 
+  </div>    
+    <!--login-banner-->
+    </div>
+    <div class="login-banner-img col-lg-7 col-md-7 col-sm-12 col-xs-12"> 
+      <!--banner-img--> 
+    </div>    
+    <!--row--> 
+  </div>
+  <!--col-lg-12--> 
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="/static/home/js/jquery-1.12.3.min.js"></script> 
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="/static/home/js/bootstrap/bootstrap.js"></script> 
+<!-- Custom --> 
+<script src="/static/home/js/custom.js"></script>
+<script src="/static/toastmessage/static/js/jquery.toastmessage.js"></script>
+{% if data.val_username != '' or data.val_recaptcha != '' or data.val_password != '' or data.val_login != '' %}
+         
+
+            {% if data.val_username == 'empty' %}
+               <script type="text/javascript">
+                   $().toastmessage('showToast',{
+                         text     : "Please enter your email.",
+                         sticky   : false,
+                         position : 'top-right',
+                         type     : 'error'
+                     } );
+               </script>
+            {% endif %}
+            {% if data.val_password == 'empty' %}
+               <script type="text/javascript">
+                  $().toastmessage('showToast',{
+                         text     : "Please enter your password.",
+                         sticky   : false,
+                         position : 'top-right',
+                         type     : 'error'
+                     } );
+               </script>
+            {% endif %}
+            {% if data.val_recaptcha == 'empty' %}
+               <script type="text/javascript">
+                  $().toastmessage('showToast',{
+                         text     : "Error Recapcha.",
+                         sticky   : false,
+                         position : 'top-right',
+                         type     : 'error'
+                     } );
+                  
+               </script>
+            {% endif %}
+            {% if data.val_login == 'not' %}
+               <script type="text/javascript">
+                  $().toastmessage('showToast',{
+                         text     : "Incorrect login information. Please check again.",
+                         sticky   : false,
+                         position : 'top-right',
+                         type     : 'error'
+                     } );
+                  
+               </script>
+               
+            {% endif %}
+            {% if data.val_login == 'not-active' %}
+               <script type="text/javascript">
+                  $().toastmessage('showToast',{
+                         text     : "Your account has not been activated. Please check again.",
+                         sticky   : false,
+                         position : 'top-right',
+                         type     : 'error'
+                     } );
+                  
+               </script>
+               
+            {% endif %}
+            
+         
+      {% endif %}
+</body>
+</html>
+
+
+

@@ -1,0 +1,35 @@
+body .wrapper{
+  background: #0A3454;
+}
+#min-date,#max-date,#min-date-history,#max-date-history{
+  border-radius: 5px;
+  background: #fff;
+}
+.content_setup_profit input{
+  background: #fff;
+  border: 1px solid #ababad;
+  color: black;
+  font-weight: bold;
+  font-size: 25px;
+}
+.content_setup_profit
+.table > tbody > tr > td {
+    padding: 0px 11px;
+}
+#username_select{
+  display: none;
+}
+
+.material-datatables .dt-buttons{
+  
+  width: 100%;
+  margin-bottom: 20px;
+  float: left;
+
+}
+.material-datatables .dt-button{
+  padding: 10px;
+  background: #eee;
+  float: right;
+  margin-left: 10px;
+}

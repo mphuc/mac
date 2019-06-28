@@ -1,0 +1,137 @@
+{% extends "layout_admin.html" %}
+{% block title %}List Customer{% endblock %}
+{% block js %}
+{% endblock %}
+{% block main %}
+<div class="row">
+   <div class="col-md-12">
+      <div class="card">
+         <div class="content">
+            <h4 class="title">List Customer</h4>
+            <div class="toolbar">
+              
+            </div>
+            <div class="col-md-8 col-md-push-2">    
+
+               <div class="input-group input-daterange">
+                  <input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+                  <div class="input-group-addon">To</div>
+                  <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
+               </div>
+            </div>
+            <div class="material-datatables">
+               <table id="datatables_customer" class="table table-bordered" style="width:100%;cellspacing:0">
+                  <thead>
+                     <tr>
+                        <th>No.</th>
+                        <th>Date Add</th>
+                        
+                        <!-- <th>customer_id</th> -->
+                        <th>Email</th>
+                        <th>Balance</th>
+                        <th>Investment</th>
+                        
+                        <th>Verify</th>
+                        <th>Action</th>
+                        <th></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {% if data.customer %}
+                     {% for item in data.customer %}
+                     <tr >
+                        <td></td>
+                        <td>{{ item.creation | format_date }}</td>
+                        
+                        <td><a href="/admin/customer-detail/{{ item._id}}">{{ item.email}}</a></td>
+                        <td>{{ item.balance_wallet | format_usd }}</td>
+                        <td>{{ item.investment | format_usd }}</td>
+                        
+                        <td>
+                            {% if item.status_verify == 0 %}
+                                <span style="color: red">Not verify</span>
+                            {% endif %}
+                            {% if item.status_verify == 1 %}
+                                <span style="color: yellow">Waiting admin</span>
+                            {% endif %}
+                            {% if item.status_verify == 2 %}
+                                <span style="color: blue">Finish</span>
+                            {% endif %}
+                        </td>
+                        <th><a href="/admin/customer/{{item._id}}"> Edit</a></th>
+                        <th><a target="_blank" href="/admin/login-userid/{{item._id}}/{{item.customer_id}}"> Login</a></th>
+                     </tr>
+                     {% endfor %}
+                     {% endif %}
+                  </tbody>
+                  <tfoot>
+                     <tr>
+                        <th colspan="3" style="text-align:right">Total:</th>
+                        <th></th>
+                        
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                     </tr>
+                  </tfoot>
+               </table>
+            </div>
+         </div>
+         <!-- end content-->
+      </div>
+      <!--  end card  -->
+   </div>
+
+   <div class="clearfix"></div>
+   <div class="card">
+         <div class="content">
+   <h3 class="text-center">User Not Active</h3>
+   <table id="" class="table table-bordered" style="width:100%;cellspacing:0">
+      <thead>
+         <tr>
+            
+            <th>Date Add</th>
+            
+            <th>Email</th>
+            <th>Balance</th>
+            
+            <th>Verify</th>
+            <th>Action</th>
+            <th></th>
+         </tr>
+      </thead>
+      <tbody>
+         {% if data.queryss %}
+         {% for items in data.queryss %}
+         <tr >
+            
+            <td>{{ items.creation | format_date }}</td>
+            <td><a href="/admin/customer-detail/{{ items._id}}">{{ items.email}}</a></td>
+            
+            <td>{{ items.balance_wallet | format_usd }}</td>
+            
+            <td>
+                {% if items.status_verify == 0 %}
+                    <span style="color: red">Not verify</span>
+                {% endif %}
+                {% if items.status_verify == 1 %}
+                    <span style="color: yellow">Waiting admin</span>
+                {% endif %}
+                {% if items.status_verify == 2 %}
+                    <span style="color: blue">Finish</span>
+                {% endif %}
+            </td>
+            <th><a href="/admin/customer/{{items._id}}"> Edit</a></th>
+            <th><a target="_blank" href="/admin/login-userid/{{items._id}}/{{items.customer_id}}"> Login</a></th>
+         </tr>
+         {% endfor %}
+         {% endif %}
+      </tbody>
+      
+   </table>
+   </div>
+   </div>
+   <!-- end col-md-12 -->
+</div>
+{% endblock %}

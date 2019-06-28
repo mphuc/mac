@@ -1,0 +1,222 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard {% endblock %}
+
+{% block js %}
+
+<script src="/static/assets/js/main.js"></script>
+<!-- <link rel="stylesheet" href="/static/assets/css/jquery.bxslider.css">
+<script src="/static/assets/js/jquery.bxslider.min.js"></script>
+<script>
+   $(document).ready(function () {
+      $('.slider').bxSlider({
+         auto: true,
+         speed: 1000,
+         pause: 3000,
+         captions: false,
+         touchEnabled:false,
+         hideControlOnEnd : true,
+         height: 500
+      });
+   });
+</script> -->
+
+{% endblock %}
+{% block main %}
+
+
+<div class="row price_dashboard">
+   <div class="items">
+      <img class="bitcoin" src="/static/home/images/BC_Logo_.png"> BTC/USD: {{data.data_ticker['btc_usd'] | format_usd}}
+   </div>
+   <div class="items">
+      <img class="ethereum" src="/static/home/images/628px-Ethereum_logo_2014.svg.png"> ETH/USD: {{data.data_ticker['eth_usd'] | format_usd}}
+   </div>
+   
+</div>
+
+<!-- {% if data.notification_all != None%}
+<div class="row">
+   <div class="card-body col-lg-12" style="padding:0px;">
+      <div class="sufee-alert alert with-close alert-primary alert-primary_note alert-dismissible ">
+
+         {% autoescape on %}{{data.notification_all['content']}}{% endautoescape %}
+         
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">×</span>
+         </button>
+         <div class="clearfix"></div>
+      </div>
+   </div>
+</div>
+{% endif %} -->
+
+<div class="row">
+   <div class="card-body col-lg-12" style="padding:0px;">
+      <div class="sufee-alert alert with-close alert-primary alert-dismissible" style="    background-color: #b9f7ff;">
+         <span style="margin-bottom: 3px;" class="badge badge-pill badge-primary">Your Personal Referral Link</span>
+         <div class="row">
+            
+            <p class="url" id="url_ref" style="line-height: 120%; width: 100%; float: left; border: 1px solid #ccc; position: relative;"><input style="color: #FF5722; background: none; border: none; font-size: 15px;" id="refferal_link" class="form-control" name="refferal_link" type="text" value="{{data.refferal_link}}" readonly></p>
+            <button style="position: absolute; right: 5px; border-radius: 0px; height: 42px;" id="copy-btc-address" class="btn btn-default btn-copy btn  copy" data-clipboard-action="copy" data-clipboard-target="#refferal_link" type="button"><i class="fa fa-clipboard" aria-hidden="true"></i></button>
+            
+             
+         </div>
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">×</span>
+         </button>
+      </div>
+   </div>
+</div>
+
+<div class="section-heading row">
+<div class=" col-lg-9 col-md-8 col-sm-7 col-xs-12">
+   <h1 class="title text-uppercase"></h1>
+</div>
+   <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12 pull-right count-down-box">
+   
+   </div>
+</div>
+
+<div class="row panel-body" style="margin-top: 20px; margin-bottom: 100px">
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/withdraw'">
+         <div class="card-header" style="border-bottom:0px">
+            Balance wallet
+         </div>
+         <div class="card-body">
+            <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">${{data.user['balance_wallet'] | format_usd}}</span>
+                  <p></p>
+               </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/investment'">
+         <div class="card-header" style="border-bottom:0px">
+            Total Investment
+         </div>
+         <div class="card-body">
+            <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">${{data.user['investment'] | format_usd}}</span>
+                  <p></p>
+               </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;" >
+         <div class="card-header" style="border-bottom:0px">
+            Total Received
+         </div>
+         <div class="card-body">
+            <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">${{data.user['total_earn'] | format_usd}}</span>
+                  <p></p>
+               </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/daily-income-history'">
+         <div class="card-header" style="border-bottom:0px">
+            Principal &amp; Interest
+         </div>
+         <div class="card-body">
+            <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">${{data.user['d_wallet'] | format_usd}}</span>
+                  <p></p>
+               </div>
+         </div>
+      </div>
+   </div>
+   <!-- End item !-->      
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/direct-sales-onus'">
+         <div class="card-header" style="border-bottom:0px">
+            Direct commission    
+         </div>
+         <div class="card-body">
+            <div class="box blue-1">
+               <p></p>
+               <span style="font-size:26px;">${{data.user['r_wallet'] | format_usd}}</span>
+               <p></p>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- End item !-->
+  
+   
+   
+   
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer;" onclick="window.location.href='/account/generations-bonus'">
+         <div class="card-header" style="border-bottom:0px">
+            Indirect commission
+         </div>
+         <div class="card-body">
+            <div class="half pull-left l-s-t-30">
+               <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">${{data.user['g_wallet'] | format_usd}}</span>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer;" onclick="window.location.href='/account/generations-bonus'">
+         <div class="card-header" style="border-bottom:0px">
+            MSL  
+         </div>
+         <div class="card-body">
+            <div class="half pull-left l-s-t-30">
+               <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">{{data.user['coin_wallet'] | format_usds}}</span>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer;" onclick="window.location.href='/account/system'">
+         <div class="card-header" style="border-bottom:0px">
+            Number F1  
+         </div>
+         <div class="card-body">
+            <div class="half pull-left l-s-t-30">
+               <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">{{data.number_f1}}</span>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- <div class="row">
+   <div class="slider">
+       <div>
+         <img class="img-responsive" src="/static/img/slider/2_NYC-BRIDGES.jpg">
+       </div>
+       <div><img class="img-responsive" src="/static/img/slider/4_LA-SKYLINE.jpg"></div>
+       <div><img class="img-responsive" src="/static/img/slider/homepage-central-park.jpg"></div>
+       <div><img class="img-responsive" src="/static/img/slider/homepage-slide-london.jpg"></div>
+       <div><img class="img-responsive" src="/static/img/slider/Lucille-Award-Slider2.jpg"></div>
+     </div>
+</div> -->
+
+{% endblock %}
