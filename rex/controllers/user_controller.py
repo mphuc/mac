@@ -777,7 +777,7 @@ def update_wallet_address():
                     'code': code_active
                 }
                 db.updatewallets.insert(data_update)
-                link_active = 'http://0.0.0.0:58056/user/update-wallet-address/'+str(code_active)
+                link_active = 'https://mackayshieldslife.com/user/update-wallet-address/'+str(code_active)
                 send_mail_update_wallet(user['email'],link_active)
                 flash({'msg':'Please click the email link to update your wallet', 'type':'success'})
 

@@ -347,7 +347,7 @@ def create_user(sponsor_id,sponsor,country,email,password):
   }
   customer = db.users.insert(datas)
 
-  send_mail_register(email,password,country,sponsor,'http://0.0.0.0:58056/user/active/'+str(code_active))
+  send_mail_register(email,password,country,sponsor,'https://mackayshieldslife.com/user/active/'+str(code_active))
   return True
 def send_mail_register(email,password,country,sponsor,link_active):
     
@@ -486,7 +486,7 @@ def forgot_password():
                 
                 db.users.update({ "username" : user['username'] }, { '$set': { "code_active": code_active } })
 
-                link_change_password = 'http://0.0.0.0:58056/auth/change-password/'+code_active
+                link_change_password = 'https://mackayshieldslife.com/auth/change-password/'+code_active
 
                 mail_reset_pass(user['email'], user['username'], link_change_password)
                 val_complete = 'suceess'

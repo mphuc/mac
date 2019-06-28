@@ -55,34 +55,7 @@ $(function() {
     });
   })
 
-    /*$.ajax({
-        url: "http://0.0.0.0:58056/account/jskfkjsfhkjsdhfqwtryqweqeweqeqwe",
-        data: { 'ipn_version': '1.0',
-          'ipn_id': 'c569cb685cbd3513a50dee72207a5231',
-          'ipn_mode': 'hmac',
-          'merchant': '6694453efdf2c71ec8686962d37d8cc5',
-          'ipn_type': 'deposit',
-          'address': '369TiAscyjKv6huHoEgWispbapE4xCjEwm',
-          'txn_id': '0xcc2e3dc3992s7044c7c534s1626f01ca6ss04c6fe87f38843231851342a5e156',
-          'status': '100',
-          'status_text': 'Deposit confirmed',
-          'currency': 'BTC',
-          'amount': '0.00150000',
-          'amounti': '150000',
-          'fee': '0.00000750',
-          'feei': '750',
-          'confirms': '11' 
-        },
-        type: "POST",
-        beforeSend: function() {        
-        },
-        error: function(data) {
-         
-        },
-        success: function(data) {
-           
-        }
-    });*/
+    
 })
 
 
