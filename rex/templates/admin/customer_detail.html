@@ -1,6 +1,113 @@
 {% extends "layout_admin.html" %}
 {% block title %}List Customer{% endblock %}
 {% block js %}
+<script type="text/javascript">
+   function formatMoney(n, c, d, t) {
+     var c = isNaN(c = Math.abs(c)) ? 0 : c,
+       d = d == undefined ? "." : d,
+       t = t == undefined ? "," : t,
+       s = n < 0 ? "-" : "",
+       i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+       j = (j = i.length) > 3 ? j % 3 : 0;
+
+     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+   };
+   function convert_profit(number){
+      
+      if (number >=50 && number < 500)
+      {
+         $('.precent_profit').html('10%');
+         $('.precent_profit_next_day').html('1.5%');
+         $('.day_number').html('35');
+         $('.precent_direct').html('8%');
+      }
+      if (number >= 500 && number < 2000)
+      {
+         $('.precent_profit').html('12%');
+         $('.precent_profit_next_day').html('1.6%');
+         $('.day_number').html('40');
+         $('.precent_direct').html('9%');
+      }
+      if (number >=2000 && number < 5000)
+      {
+         $('.precent_profit').html('14%');
+         $('.precent_profit_next_day').html('1.7%');
+         $('.day_number').html('50');
+         $('.precent_direct').html('10%');
+      }
+      if (number >=5000 && number < 10000)
+      {
+         $('.precent_profit').html('16%');
+         $('.precent_profit_next_day').html('1.8%');
+         $('.day_number').html('60');
+         $('.precent_direct').html('11%');
+      }
+      if (number >=10000)
+      {
+         $('.precent_profit').html('18%');
+         $('.precent_profit_next_day').html('1.9%');
+         $('.day_number').html('65');
+         $('.precent_direct').html('12%');
+      }
+      
+   }
+
+
+   $('#quantity_coin').on('input propertychange',function(){
+      var currency = $('#currency_invest').val();
+      var price_btc = $('.submit_investment input[name="price_btc"]').val();
+      var price_eth = $('.submit_investment input[name="price_eth"]').val();
+      var amount = $(this).val().replace(' ', '');
+      
+      if (currency == 'BTC')
+      {  
+         var amount_usd = parseFloat(amount) * parseFloat(price_btc);
+         $('#quantity_usd').val(formatMoney(amount_usd));
+         convert_profit(amount_usd);
+      }
+      if (currency == 'ETH')
+      {
+         var amount_usd = parseFloat(amount) * parseFloat(price_eth);
+         $('#quantity_usd').val(formatMoney(amount_usd));
+         convert_profit(amount_usd);
+      }
+   })
+
+   $('#quantity_usd').on('input propertychange',function(){
+      var currency = $('#currency_invest').val();
+      var price_btc = $('.submit_investment input[name="price_btc"]').val();
+      var price_eth = $('.submit_investment input[name="price_eth"]').val();
+      var amount = $(this).val().replace(',', '');
+      if (amount)
+      {
+         $(this).val(formatMoney(amount))
+         if (currency == 'BTC')
+         {  
+            var amount_usd = (parseFloat(amount)/parseFloat(price_btc)).toFixed(8);
+            $('#quantity_coin').val(amount_usd);
+            convert_profit(amount);
+         }
+         if (currency == 'ETH')
+         {
+            var amount_usd = parseFloat(amount)/parseFloat(price_eth);
+            $('#quantity_coin').val(amount_usd);
+            convert_profit(amount);
+         }
+      }
+      else
+      {
+         $('#quantity_coin').val('');
+      }
+         
+   })
+   $('#currency_invest').on('change',function(){
+      $('#quantity_coin').val('');
+      $('#quantity_usd').val('');
+   })
+   
+
+
+</script>
 {% endblock %}
 {% block main %}
 <div class="row">
@@ -8,8 +115,79 @@
       <div class="card">
          <div class="content">
             <h4 class="title">Detail ID: {{data.user['username']}}</h4>
+            
+            {% if data.check_investment == None  %}
+            <div class="row investment">
+      <div class="col-md-6 col-md-push-3">
+         <div class="card">
+            <div class="card-header title_invest">
+               <strong class="card-title ">INVESTMENT SUBMIT</strong>
+            </div>
+            <div class="card-body investment_submit">
+               <div class="">
+                  <form  method="post" action="/account/active-investment/wierywieurwieryiwue" class="form-horizontal form-bordered form-account">
+                     <div class="form-group">
+                     
+                       
+                        <div class="description_wallet">
+                           <p>Profit: <b class="precent_profit">12%</b></p>
+                           <p>Profit next day: <b class="precent_profit_next_day">1.6%</b></p>
+                           <p>Day Number: <b class="day_number">40</b></p>
+                           <p>Direct commission: <b class="precent_direct">9%</b></p>
+                           
+                        </div>
+                         <div class="submit_investment" >
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <label>Select Currency</label>
+                                 <select id="currency_invest" name="currency" class="form-control">
+                                    <option selected="selected" value="BTC">Bitcoin</option>
+                                    <option value="ETH">Ethereum</option>
+                                 </select>
+                                 
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-xs-5">
+                                 <label>Amount Currency</label>
+                                 <input type="text" id="quantity_coin"  placeholder="0.00" name="quantity_coin" class="form-control" >
+                              </div>
+                              <div class="col-xs-2 text-center">
+                                 <img style="height: 50px; margin-top: 18px" src="/static/img/exchange.png">
+                              </div>
+                              <div class="col-xs-5">
+                                 <label>Amount USD</label>
+                                 <input type="text" id="quantity_usd"  placeholder="0.00" name="quantity_usd" class="form-control" >
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <input type="hidden" name="user_id" value="{{data.user.customer_id}}">
+                                 <input type="hidden" name="token_crt" value="{{data.token_crt}}">
+                                 <input type="hidden" name="price_btc" value="{{data.ticker['btc_usd']}}">
+                                 <input type="hidden" name="price_eth" value="{{data.ticker['eth_usd']}}">
+                                 <button type="submit" id="submit_investment" class="login-btn"><i class="fa fa-refresh fa-spin fa-3x fa-fw" style="font-size: 14px; display: none;"></i> <span>Active Now</span></button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="clearfix"></div>
+                       
+                     </div>
+                     
+                     
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% else %}
+   <h3 class="text-center" style="margin-bottom: 20px;">Curren Package: <b>{{data.check_investment['package'] | format_usd}} USD </b></h3>
+   {% endif %}
+
+
             <div class="toolbar">
-              
+               
             </div>
             <div class="col-md-8 col-md-push-2 table_historys">    
 

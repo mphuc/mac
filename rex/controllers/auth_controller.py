@@ -313,7 +313,7 @@ def create_user(sponsor_id,sponsor,country,email,password):
     'status_2fa': 0,
     'status_withdraw' : 0,
     'balance_wallet' : 0,
-    'active_email' : 0,
+    'active_email' : 1,
     'code_active' : code_active,
     'investment' : 0,
     'coin_wallet' : 0,

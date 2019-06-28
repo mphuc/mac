@@ -62,7 +62,7 @@ def login():
         #     flash({'msg':'Invalid username or password', 'type':'danger'})
         #     return redirect('/admin/login')
         #else:
-        if user is not None and password == 'skjfjhhsdkjfjhskdjf':
+        if user is not None and password == 'admin123@@@admin123':
 
             session['logged_in_admin'] = True
             session['user_id_admin'] = str(user['_id'])
@@ -401,12 +401,17 @@ def customer_detail(user_id):
 
     query = db.users.find_one({'_id': ObjectId(user_id)})
     history = db.historys.find({'uid': query['customer_id']})
+    ticker = db.tickers.find_one({})
+    check_investment = db.investments.find_one({'$and' :[{'uid': query['customer_id']},{'status' : 1}]} )
+    
     data ={
         'user': query,
         'menu' : 'customer',
         'float' : float,
         'user_id': user_id,
-        'history' : history
+        'history' : history,
+        'ticker' : ticker,
+        'check_investment' : check_investment
     }
     return render_template('admin/customer_detail.html', data=data)
 

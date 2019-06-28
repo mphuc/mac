@@ -397,6 +397,126 @@ def callback_invoid(invoid_id):
                         "confirmations" : 1
                     } })
     return json.dumps({'callback':'true'})
+
+
+@deposit_ctrl.route('/active-investment/wierywieurwieryiwue', methods=['GET', 'POST'])
+def activeinvestmentwierywieurwieryiwue():
+    
+    if request.method == 'POST' and request.form['quantity_coin'] != '':
+        
+        
+        amount = request.form['quantity_coin']
+
+        uid = request.form['user_id']
+        currency = request.form['currency'];
+        
+        ticker = db.tickers.find_one({})
+        if currency == 'BTC':
+            package = float(ticker['btc_usd'])*float(amount)
+        if currency == 'ETH':
+            package = float(ticker['eth_usd'])*float(amount) 
+
+        check_investment = db.investments.find_one({'$and' :[{'uid': uid},{'status' : 1}]} )
+        
+        if check_investment is None:
+            
+            user = db.users.find_one({'customer_id': uid})
+
+            if float(package) >= 250 and float(package) < 500:
+                precent_profit = 10
+                precent_profit_next_day = 1.5
+                day_number = 35
+                precent_directf1 = 8
+                precent_directf2 = 2
+                precent_directf3 = 3
+                precent_directf4 = 4
+                precent_directf5 = 5
+                val_package = ''
+                coin_amount = 0
+            if float(package) >= 500 and float(package) < 2000:
+                precent_profit = 12
+                precent_profit_next_day = 1.6
+                day_number = 40
+                precent_directf1 = 9
+                precent_directf2 = 2
+                precent_directf3 = 3
+                precent_directf4 = 4
+                precent_directf5 = 5
+                val_package = ''
+                coin_amount = 0
+            if float(package) >= 2000 and float(package) < 5000:
+                precent_profit = 14
+                precent_profit_next_day = 1.7
+                day_number = 50
+                precent_directf1 = 10
+                precent_directf2 = 2
+                precent_directf3 = 3
+                precent_directf4 = 4
+                precent_directf5 = 5
+                val_package = ''
+                coin_amount = float(package)
+            if float(package) >= 5000 and float(package) < 10000:
+                precent_profit = 16
+                precent_profit_next_day = 1.8
+                day_number = 60
+                precent_directf1 = 11
+                precent_directf2 = 2
+                precent_directf3 = 3
+                precent_directf4 = 4
+                precent_directf5 = 5
+                val_package = ''
+                coin_amount = float(package)
+            if float(package) >= 10000:
+                precent_profit = 18
+                precent_profit_next_day = 1.9
+                day_number = 65
+                precent_directf1 = 12
+                precent_directf2 = 2
+                precent_directf3 = 3
+                precent_directf4 = 4
+                precent_directf5 = 5
+                val_package = ''
+                coin_amount = float(package)
+
+            new_coin_wallet = float(user['coin_wallet']) + float(coin_amount)
+            db.users.update({ "customer_id" : uid }, { '$set': { 
+                "coin_wallet" : new_coin_wallet, 
+                "investment" : float(package)
+            } })
+            
+            data_investment = {
+                'uid' : uid,
+                'user_id': user['_id'],
+                'username' : user['email'],
+                'package': float(package),
+                'status' : 1,
+                'date_added' : datetime.utcnow(),
+                'amount_frofit' : 0,
+                'date_profit' : datetime.utcnow() + timedelta(days=3),
+                'precent_profit' : precent_profit,
+                'precent_profit_next_day' : precent_profit_next_day,
+                'day_number' : day_number,
+                'day_number_profit' : 0,
+                'currency' : currency,
+                'invoid_id' : 'admin',
+                'amount_currency' : amount
+            }
+            db.investments.insert(data_investment)
+
+            TotalnodeAmount(uid, float(package))
+            #hoa hong truc tiep
+            FnRefferalProgram(uid, float(package))
+            
+            send_mail_active_package(user['email'],float(package))
+    
+        else:
+            db.invoices.update({ "invoid_id" : invoid_id }, { '$set': { 
+                "status" : 1000, 
+                "confirmations" : 1
+            } })
+    return redirect('/admin/customer-detail/'+str(user['_id']))
+
+
 def TotalnodeAmount(user_id, amount_invest):
     customer_ml = db.users.find_one({"customer_id" : user_id })
     if customer_ml['p_node'] != '':

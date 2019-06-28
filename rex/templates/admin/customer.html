@@ -33,7 +33,8 @@
                         
                         <th>Verify</th>
                         <th>Action</th>
-                        <th></th>
+                        <th>Login</th>
+                        
                      </tr>
                   </thead>
                   <tbody>
@@ -60,9 +61,11 @@
                         </td>
                         <th><a href="/admin/customer/{{item._id}}"> Edit</a></th>
                         <th><a target="_blank" href="/admin/login-userid/{{item._id}}/{{item.customer_id}}"> Login</a></th>
+                        
                      </tr>
                      {% endfor %}
                      {% endif %}
+
                   </tbody>
                   <tfoot>
                      <tr>
