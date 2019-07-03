@@ -103,6 +103,29 @@ def ProfitDaiylysystem():
         }
     return render_template('admin/profit-system.html', data=data)
 
+@admin1_ctrl.route('/bonus-sales', methods=['GET', 'POST'])
+def bonus_sales():
+    error = None
+    if session.get('logged_in_admin') is None:
+        return redirect('/admin/login')
+
+
+    user_payment = db.users.find({'total_node':{'$gte': 100000 }})
+        
+    query = db.historys.find({'type': {'$regex': 'bonus-sales'}})
+    
+
+    data ={
+            'menu' : 'bonus-sales',
+            'user_payment' : user_payment,
+            'history': query
+       
+        }
+    return render_template('admin/bonus-sales.html', data=data)
+
+
+
+
 @admin1_ctrl.route('/profit-daily', methods=['GET', 'POST'])
 def ProfitDaiylydaily():
     error = None

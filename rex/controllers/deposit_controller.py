@@ -128,7 +128,7 @@ def deposit():
                     if float(package) >= 10000:
                         precent_profit = 18
                         precent_profit_next_day = 1.9
-                        day_number = 65
+                        day_number = 70
                         precent_directf1 = 12
                         precent_directf2 = 2
                         precent_directf3 = 3
@@ -276,6 +276,68 @@ def create_invoid():
             data = {'status' : 'error','token_crt' : token_crt ,'message' : 'Error NetWork'}
             return json.dumps(data)
 
+@deposit_ctrl.route('/investment/return-balance', methods=['GET', 'POST'])
+def return_balance():
+    if session.get(u'logged_in') is None:
+        return redirect('/user/login')
+    uid = session.get('uid')
+    
+    investment = db.investments.find_one({'$and' : [{'status' : 0},{'uid': uid}]} )
+    if investment is not None:
+        db.investments.update({'_id' : ObjectId(investment['_id'])},{ '$set' : {'status' : 2}})
+        customers = db.users.find_one({'customer_id': uid})
+
+        balance_wallet = float(customers['balance_wallet'])
+        new_balance_wallet = float(balance_wallet) + float(investment['package'])
+        new_balance_wallet = float(new_balance_wallet)
+
+        db.users.update({ "_id" : ObjectId(customers['_id']) }, { '$set': {'balance_wallet': new_balance_wallet } })
+
+        SaveHistory(uid, 
+            customers['_id'], 
+            customers['email'], 
+            float(investment['package']), 
+            'Return Balance Investment', 
+            'USD', 'Return Balance Investment', '', '')
+
+        flash({'msg':'Return Balance Investment Success', 'type':'success'})
+
+    return redirect('/account/investment')
+
+
+@deposit_ctrl.route('/investment/re-investment', methods=['GET', 'POST'])
+def re_investment():
+    if session.get(u'logged_in') is None:
+        return redirect('/user/login')
+    uid = session.get('uid')
+    
+    investment = db.investments.find_one({'$and' : [{'status' : 0},{'uid': uid}]} )
+    if investment is not None:
+        db.investments.update({'_id' : ObjectId(investment['_id'])},{ '$set' : {'status' : 2}})
+        user = db.users.find_one({'customer_id': uid})
+
+        data_investment = {
+            'uid' : uid,
+            'user_id': user['_id'],
+            'username' : user['email'],
+            'package': float(investment['package']),
+            'status' : 1,
+            'date_added' : datetime.utcnow(),
+            'amount_frofit' : 0,
+            'date_profit' : datetime.utcnow() + timedelta(days=3),
+            'precent_profit' : investment['precent_profit'],
+            'precent_profit_next_day' : investment['precent_profit_next_day'],
+            'day_number' : investment['day_number'],
+            'day_number_profit' : 0,
+            'currency' : investment['currency'],
+            'invoid_id' : 'ReInvestment',
+            'amount_currency' : ''
+        }
+        db.investments.insert(data_investment)
+
+        flash({'msg':'Re-Investment Success', 'type':'success'})
+        send_mail_active_package(user['email'],float(package))
+    return redirect('/account/investment')    
 @deposit_ctrl.route('/jskfkjsfhkjsdhfqwtryqweqeweqeqwe/<invoid_id>', methods=['GET', 'POST'])
 def callback_invoid(invoid_id):
     print 'callback invoid_id'
@@ -351,7 +413,7 @@ def callback_invoid(invoid_id):
                     if float(package) >= 10000:
                         precent_profit = 18
                         precent_profit_next_day = 1.9
-                        day_number = 65
+                        day_number = 70
                         precent_directf1 = 12
                         precent_directf2 = 2
                         precent_directf3 = 3

@@ -603,6 +603,79 @@ def AdminWithdrawsubmit(ids):
             db.withdrawas.update({'_id' : ObjectId(ids)},{'$set' : {'status' : 1}})
 
     return redirect('/admin/withdraw')
+
+@admin_ctrl.route('/bonus-sales-payment/<customer_id>', methods=['GET', 'POST'])
+def bonus_sales_payment(customer_id):
+    error = None
+    if session.get('logged_in_admin') is None:
+        return redirect('/admin/login')
+
+    commission_eth = 0
+    commission_usd = 0
+    user = db.users.find_one({'_id': ObjectId(customer_id)})
+    if  float(user['total_node']) >=  100000 and float(user['total_node']) < 250000:
+        commission_eth = 10
+        commission_usd = 0
+        string_history = '10 ETH'
+    if  float(user['total_node']) >=  250000 and float(user['total_node']) < 400000:
+        commission_eth = 30
+        commission_usd = 0
+        string_history = '30 ETH'
+    if  float(user['total_node']) >=  400000 and float(user['total_node']) < 600000:
+        commission_eth = 50
+        commission_usd = 0
+        string_history = '50 ETH'
+    if  float(user['total_node']) >=  600000 and float(user['total_node']) < 1000000:
+        commission_eth = 80
+        commission_usd = float(user['total_node'])*0.01
+        string_history = '80 ETH '+str(commission_usd)+' USD'
+    if  float(user['total_node']) >=  1000000:
+        commission_eth = 120
+        commission_usd = float(user['total_node'])*0.015
+        string_history = '120 ETH '+str(commission_usd)+' USD'
+    
+    if float(commission_eth) > 0:
+
+        balance_wallet = float(user['balance_wallet'])
+        new_balance_wallet = float(balance_wallet) + float(commission_usd)
+        new_balance_wallet = float(new_balance_wallet)
+
+        ticker = db.tickers.find_one({})
+        usd_eth = float(ticker['eth_usd'])*float(commission_eth) 
+
+        total_earn = float(user['total_earn'])
+        new_total_earn = float(total_earn) + float(commission_usd) + float(usd_eth)
+        new_total_earn = float(new_total_earn)
+
+        db.users.update({ "_id" : ObjectId(customer_id) }, { '$set': {'balance_wallet' : new_balance_wallet,'total_earn': new_total_earn, 'total_node' :0 } })
+
+        SaveHistory(user['customer_id'], 
+            user['_id'], 
+            user['email'], 
+            commission_eth, 
+            'bonus-sales', 
+            'ETH', 'Bonus sales when sales reach '+str(user['total_node'])+' USD', '', '')
+
+    return redirect('/admin/bonus-sales')
+
+def SaveHistory(uid, user_id, username, amount, types, wallet, detail, rate, txtid):
+    data_history = {
+        'uid' : uid,
+        'user_id': user_id,
+        'username' : username,
+        'amount': (amount),
+        'type' : types,
+        'wallet': wallet,
+        'date_added' : datetime.utcnow(),
+        'detail': detail,
+        'rate': rate,
+        'txtid' : txtid,
+        'amount_sub' : 0,
+        'amount_add' : 0,
+        'amount_rest' : 0
+    }
+    db.historys.insert(data_history)
+    return True
 @admin_ctrl.route('/withdraweth', methods=['GET', 'POST'])
 def AdminWithdraweth():
     error = None

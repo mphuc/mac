@@ -92,7 +92,23 @@
             </a>
          </li>
      {% endif %} -->
-     
+      
+     {% if data.menu == 'bonus-sales' %}
+        <li class="active">
+            <a href="/admin/bonus-sales">
+              
+               <p>Bonus sales</p>
+            </a>
+         </li>
+     {% else %}
+       <li>
+            <a href="/admin/bonus-sales">
+              
+               <p>Bonus sales</p>
+            </a>
+         </li>
+     {% endif %}
+
       {% if data.menu == 'withdraw' %}
         <li class="active">
             <a href="/admin/withdraw">

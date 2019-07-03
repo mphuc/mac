@@ -2,11 +2,11 @@
 {% block title %}Investment{% endblock %}
 {% block js %}
 
-<script src="/static/assets/js/script.js"></script>
+<!-- <script src="/static/assets/js/script.js"></script>
 <script src="/static/assets/js/getinfo.js"></script>
 <script src="/static/assets/js/lending.js"></script>
-<script src="/static/assets/js/main.js"></script>
-
+<script src="/static/assets/js/main.js"></script> -->
+<script src="/static/assets/js/jquery.countdown.min.js"></script>  
 <script type="text/javascript">
    function formatMoney(n, c, d, t) {
      var c = isNaN(c = Math.abs(c)) ? 0 : c,
@@ -178,6 +178,21 @@
       return false
    })
 
+    $('#show-modal-select').on('click',function(){
+      $('#myModal-ViewFinish').modal({
+          show: 'true'
+      }); 
+    })
+
+
+    $('.clock').each(function(){
+        $(this).countdown($(this).attr('data'), function(event) {
+        $(this).text(
+          event.strftime('%D days %H:%M:%S')
+        );
+        });
+    });
+
     
 
 </script>
@@ -341,8 +356,10 @@
                         <th class="text-center">No.</th>
                         <th class="text-center">Datetime</th>
                         <th class="text-center">Package</th>
-                        <th class="text-center">Day Number</th>
+                        <th class="text-center">Day Remaining</th>
+                        <th class="text-center">Profit</th>
                         <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -353,14 +370,26 @@
                         <td class="text-center"></td>
                         <td class="text-center">{{ item.date_added | format_date }}</td>
                         <td class="text-center">${{ item.package | format_usd}}</td>
-                        <td class="text-center">{{item.day_number_profit}}
+                        <td class="text-center">
+                          {% if item.day_number_profit >0 and item.status == 1 %}
+                          <div class="countdown">
+                            <span style="color: red" class="clock" data="{{item.date_profit   | format_date_profit(item.day_number - item.day_number_profit)}}"></span>
+                          </div>
+                          {% endif %}
                         </td>
+                        <td class="text-center">${{ item.amount_frofit | format_usd}}</td>
+
                         <td class="text-center">
                            {% if item.status == 1 %}
                               <span class="label label-info">Active</span>
                            {% endif %}
-                           {% if item.status == 0 %}
+                           {% if item.status == 0 or item.status == 2 %}
                               <span class="label label-danger">Finish</span>
+                           {% endif %}
+                        </td>
+                        <td class="text-center">
+                           {% if item.status == 0 %}
+                              <span id="show-modal-select" style="cursor: pointer;" class="label label-success">View <i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
                            {% endif %}
                         </td>
                      </tr>
@@ -370,8 +399,8 @@
                   <tfoot>
                      <tr>
                          
-                         <th colspan="2" class="text-right">Total</th>
-                        <th colspan="3"></th> 
+                        <th colspan="2" class="text-right">Total</th>
+                        <th colspan="5"></th> 
 
                      </tr>
                  </tfoot>
@@ -382,6 +411,37 @@
             </div>
          </div>
       </div>
+</div>
+<div id="myModal-ViewFinish" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Your choice with investment package</h4>
+      </div>
+      <div class="modal-body">
+        <p>Click "<b>Return Balance</b>" to withdraw funds into the account balance.</p>
+        <p>Click on "<b>Reinvestment</b>" to recreate the investment package.</p>
+        <div class="row" style="margin-top: 30px; margin-bottom: 20px;">
+          <div class="col-xs-6 text-center">
+            <a href="/account/investment/return-balance">
+              <button style="font-weight: 500;" class="btn btn-success">Return Balance</button>
+            </a>
+          </div>
+          <div class="col-xs-6 text-center">
+            <a href="/account/investment/re-investment">
+              <button style="font-weight: 500;" class="btn btn-info">Reinvestment</button>
+            </a>
+          </div>
+        </div>
+        <p><i style="color: red; font-size: 12px">Note: After 24 hours the system will recreate new investment package.</i></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 

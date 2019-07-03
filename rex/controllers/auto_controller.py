@@ -315,7 +315,7 @@ def caculator_dailybonus(ids):
             
             
             if (float(day_number_profit)) >= (float(x['day_number'])):
-                db.investments.update({'_id' : ObjectId(x['_id'])},{ '$set' : {'status' : 2}})
+                db.investments.update({'_id' : ObjectId(x['_id'])},{ '$set' : {'status' : 0}})
             
             
 
@@ -323,6 +323,35 @@ def caculator_dailybonus(ids):
                 
         return json.dumps({'status' : 'success'})
 
+@auto_ctrl.route('/dailybonus/re-investment', methods=['GET', 'POST'])
+def caculator_re_investment():
+
+    investment = db.investments.find({'status' : 0})
+    for x in investment:
+        
+        db.investments.update({'_id' : ObjectId(x['_id'])},{ '$set' : {'status' : 2}})
+        user = db.users.find_one({'customer_id': x['uid']})
+
+        data_investment = {
+            'uid' : x['uid'],
+            'user_id': user['_id'],
+            'username' : user['email'],
+            'package': float(x['package']),
+            'status' : 1,
+            'date_added' : datetime.utcnow(),
+            'amount_frofit' : 0,
+            'date_profit' : datetime.utcnow() + timedelta(days=3),
+            'precent_profit' : x['precent_profit'],
+            'precent_profit_next_day' : x['precent_profit_next_day'],
+            'day_number' : x['day_number'],
+            'day_number_profit' : 0,
+            'currency' : x['currency'],
+            'invoid_id' : 'ReInvestment',
+            'amount_currency' : ''
+        }
+        db.investments.insert(data_investment)
+        send_mail_active_package(user['email'],float(package))
+    return json.dumps({'status' : 'success'})
 def send_mail_test(form):
     html = ''
     

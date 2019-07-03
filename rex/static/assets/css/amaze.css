@@ -11980,27 +11980,28 @@ h1, h2, h3, h4, h5, h6 {
     height: 50px;
     
     line-height: 50px;
-    background: #8bc24a;
-    border: 2px solid #ffffff;
-    color: #fff;
+    background: #ffffff;
+    border: 1px solid #093454;
+    color: #0a0a0a;
 }
 .investment .submit_investment input::-webkit-input-placeholder { /* Edge */
-  color: #fff;
+  color: #0a0a0a;
 }
 
 .investment .submit_investment input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #fff;
+  color: #0a0a0a;
 }
 
 .investment .submit_investment input::placeholder {
-  color: #fff;
+  color: #0a0a0a;
 }
 .investment .submit_investment select{
   height: 50px;
-    background: #8bc24a !important;
+    background: #ffffff !important;
     font-size: 18px;
-    border: 2px solid white;
-    color: #fff;
+    border: 1px solid #093454;
+    color: #0a0a0a;
+
 }
 .investment .submit_investment button{
   border: none;
@@ -12021,10 +12022,10 @@ h1, h2, h3, h4, h5, h6 {
 .investment .description_wallet p{
   margin-bottom: 5px;
     font-size: 15px;
-    background: #f7f7f7;
+    background: #ffffff;
     padding: 5px 15px;
     border-radius: 5px;
-    border: 1px solid #FF9800;
+    border: 1px solid #093454;
 }
 .investment .error{
   width: 100%;
@@ -12037,7 +12038,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .investment .investment_submit{
   padding: 0px 20px;
-  background: #8BC34A;
+  background: #eae8e8;
 }
 .investment .investment_submit.active{
   background: #fff;
@@ -12060,7 +12061,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .investment .submit_investment label{
   font-weight: 500;
-    color: #fff;
+    color: #0e0e0e;
     font-size: 10px;
     margin: 0;
 }
