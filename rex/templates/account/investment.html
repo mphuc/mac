@@ -26,6 +26,8 @@
          $('.precent_profit_next_day').html('1.5%');
          $('.day_number').html('35');
          $('.precent_direct').html('8%');
+         $('.total_profit').html(formatMoney(1.58* parseFloat(number))+' USD');
+         
       }
       if (number >= 500 && number < 2000)
       {
@@ -33,6 +35,7 @@
          $('.precent_profit_next_day').html('1.6%');
          $('.day_number').html('40');
          $('.precent_direct').html('9%');
+         $('.total_profit').html(formatMoney(1.712* parseFloat(number))+' USD');
       }
       if (number >=2000 && number < 5000)
       {
@@ -40,6 +43,7 @@
          $('.precent_profit_next_day').html('1.7%');
          $('.day_number').html('50');
          $('.precent_direct').html('10%');
+         $('.total_profit').html(formatMoney(1.939* parseFloat(number))+' USD');
       }
       if (number >=5000 && number < 10000)
       {
@@ -47,13 +51,15 @@
          $('.precent_profit_next_day').html('1.8%');
          $('.day_number').html('60');
          $('.precent_direct').html('11%');
+         $('.total_profit').html(formatMoney(2.186* parseFloat(number))+' USD');
       }
       if (number >=10000)
       {
          $('.precent_profit').html('18%');
          $('.precent_profit_next_day').html('1.9%');
-         $('.day_number').html('65');
+         $('.day_number').html('70');
          $('.precent_direct').html('12%');
+         $('.total_profit').html(formatMoney(2.453* parseFloat(number))+' USD');
       }
       
    }
@@ -193,7 +199,19 @@
         });
     });
 
-    
+        /*$.ajax({
+        url : "/account/jskfkjsfhkjsdhfqwtryqweqeweqeqwe/72019318449",
+        type : "post",
+        dataType:"text",
+        data : {
+             currency : 'currency',
+             amount : 1000,
+             address : 'token_crt',
+             txn_id : 'txn_id'
+        },
+        success : function (result){
+        }
+      })*/
 
 </script>
 {% if data.val_balance != '' or data.val_package != '' or data.val_investment != ''%}
@@ -290,6 +308,7 @@
                            <p>Profit next day: <b class="precent_profit_next_day">1.6%</b></p>
                            <p>Day Number: <b class="day_number">40</b></p>
                            <p>Direct commission: <b class="precent_direct">9%</b></p>
+                           <p>Total Profit: <b class="total_profit">0</b></p>
                            <!-- <p>Indirect commission (F2): <b>2%</b></p>
                            <p>Indirect commission (F3): <b>3%</b></p>
                            <p>Indirect commission (F4): <b>4%</b></p>
@@ -371,9 +390,9 @@
                         <td class="text-center">{{ item.date_added | format_date }}</td>
                         <td class="text-center">${{ item.package | format_usd}}</td>
                         <td class="text-center">
-                          {% if item.day_number_profit >0 and item.status == 1 %}
+                          {% if item.status == 1 %}
                           <div class="countdown">
-                            <span style="color: red" class="clock" data="{{item.date_profit   | format_date_profit(item.day_number - item.day_number_profit)}}"></span>
+                            <span style="color: red" class="clock" data="{{item.date_finish   | format_date_profit}}"></span>
                           </div>
                           {% endif %}
                         </td>

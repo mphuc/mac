@@ -16,6 +16,7 @@ class Investment(Document):
         'package' : float,
         'status' : int,
         'date_added' : datetime.datetime,
+        'date_finish' : datetime.datetime,
         'amount_frofit' : float,
         'date_profit' : datetime.datetime,
         'precent_profit' : float,

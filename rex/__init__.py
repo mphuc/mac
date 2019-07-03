@@ -203,13 +203,12 @@ def format_int(value): # date = datetime object.
 
 @app.template_filter()
 def format_date(date): # date = datetime object.
+    return date.strftime('%Y-%m-%d %H:%M:%S') 
     return date.strftime('%Y/%m/%d %H:%M:%S')
 
 @app.template_filter()
-def format_date_profit(date,number): # date = datetime object.
-    date = date  + timedelta(days=number)
-
-    return date.strftime('%Y-%m-%d %H:%M:%S') 
+def format_date_profit(date): # date = datetime object.
+    return date.strftime('%Y/%m/%d %H:%M:%S')
 
 
     

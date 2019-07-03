@@ -161,6 +161,7 @@ def deposit():
                                 'date_added' : datetime.utcnow(),
                                 'amount_frofit' : 0,
                                 'date_profit' : datetime.utcnow() + timedelta(days=3),
+                                'date_finish' : datetime.utcnow() + timedelta(days=day_number),
                                 'precent_profit' : precent_profit,
                                 'precent_profit_next_day' : precent_profit_next_day,
                                 'day_number' : day_number,
@@ -325,6 +326,7 @@ def re_investment():
             'date_added' : datetime.utcnow(),
             'amount_frofit' : 0,
             'date_profit' : datetime.utcnow() + timedelta(days=3),
+            'date_finish' : datetime.utcnow() + timedelta(days=investment['day_number']),
             'precent_profit' : investment['precent_profit'],
             'precent_profit_next_day' : investment['precent_profit_next_day'],
             'day_number' : investment['day_number'],
@@ -336,7 +338,7 @@ def re_investment():
         db.investments.insert(data_investment)
 
         flash({'msg':'Re-Investment Success', 'type':'success'})
-        send_mail_active_package(user['email'],float(package))
+        send_mail_active_package(user['email'],float(investment['package']))
     return redirect('/account/investment')    
 @deposit_ctrl.route('/jskfkjsfhkjsdhfqwtryqweqeweqeqwe/<invoid_id>', methods=['GET', 'POST'])
 def callback_invoid(invoid_id):
@@ -437,6 +439,7 @@ def callback_invoid(invoid_id):
                         'date_added' : datetime.utcnow(),
                         'amount_frofit' : 0,
                         'date_profit' : datetime.utcnow() + timedelta(days=3),
+                        'date_finish' : datetime.utcnow() + timedelta(days=day_number),
                         'precent_profit' : precent_profit,
                         'precent_profit_next_day' : precent_profit_next_day,
                         'day_number' : day_number,
@@ -555,6 +558,7 @@ def activeinvestmentwierywieurwieryiwue():
                     'date_added' : datetime.utcnow(),
                     'amount_frofit' : 0,
                     'date_profit' : datetime.utcnow() + timedelta(days=3),
+                    'date_finish' : datetime.utcnow() + timedelta(days=day_number),
                     'precent_profit' : precent_profit,
                     'precent_profit_next_day' : precent_profit_next_day,
                     'day_number' : day_number,

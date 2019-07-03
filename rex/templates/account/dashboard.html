@@ -137,6 +137,39 @@
          </div>
       </div>
    </div>
+
+
+
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/investment'">
+         <div class="card-header" style="border-bottom:0px">
+            Remaining amount
+         </div>
+         <div class="card-body">
+            <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">${{data.remaining_amount | format_usd}}</span>
+                  <p></p>
+               </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/investment'">
+         <div class="card-header" style="border-bottom:0px">
+            Days to receive interest
+         </div>
+         <div class="card-body">
+            <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">{{data.day_interest }}</span>
+                  <p></p>
+               </div>
+         </div>
+      </div>
+   </div>
+
    <!-- End item !-->      
    <div class="col-lg-3 nopadding">
       <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/direct-sales-onus'">
@@ -167,6 +200,23 @@
                <div class="box blue-1">
                   <p></p>
                   <span style="font-size:26px;">${{data.user['g_wallet'] | format_usd}}</span>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;" >
+         <div class="card-header" style="border-bottom:0px">
+            Bonus sales
+         </div>
+         <div class="card-body">
+            <div class="half pull-left l-s-t-30">
+               <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">0 ETH</span>
                   
                </div>
             </div>

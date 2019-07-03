@@ -149,6 +149,23 @@ def dashboard():
 
 		notification_all = db.notifications.find_one({'$and' : [{'type' : 'all'},{'status' : 0}]})
 		
+		remaining_amount = 0
+		day_interest = 0
+		investment = db.investments.find_one({'$and' : [{'status' : 1},{'uid': uid}]} )
+		if investment is not None:
+			package = investment['package']
+			if float(package) >= 50 and float(package) < 500:
+				precent = 158
+			if float(package) >= 500 and float(package) < 2000:
+				precent = 171.2
+			if float(package) >= 2000 and float(package) < 5000:
+				precent = 193.9
+			if float(package) >= 5000 and float(package) < 10000:
+				precent = 218.6
+			if float(package) >= 10000:
+				precent = 245.3
+			day_interest =  investment['day_number_profit']
+			remaining_amount = round( ((float(precent) * float(package) /100) - float(investment['amount_frofit'])),2)
 		data ={
 			'refferal_link' : refferal_link,
 		    'user': user,
@@ -163,6 +180,8 @@ def dashboard():
 		    # 'total_node_rights' : total_node_rights,
 	        'notification_all' : notification_all,
 	        'data_ticker' : data_ticker,
+	        'remaining_amount' : remaining_amount,
+	        'day_interest' : day_interest,
 	        'number_f1' : db.User.find({'$and' : [{'p_node': uid},{ 'investment': { '$gt': 0 } }]}).count()
 		}
 		
