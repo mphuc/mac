@@ -77,9 +77,9 @@
    </div>
 </div>
 
-<div class="row panel-body" style="margin-top: 20px; margin-bottom: 100px">
+<div class="row " style="margin-top: 20px; margin-bottom: 100px">
    <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/withdraw'">
+      <div class="card" style="margin-bottom:0px;     background-color: #003A63;cursor: pointer" onclick="window.location.href='/account/withdraw'">
          <div class="card-header" style="border-bottom:0px">
             Balance wallet
          </div>
@@ -94,7 +94,7 @@
    </div>
 
    <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/investment'">
+      <div class="card" style="margin-bottom:0px; background-color: #5C622D;cursor: pointer" onclick="window.location.href='/account/investment'">
          <div class="card-header" style="border-bottom:0px">
             Total Investment
          </div>
@@ -109,7 +109,7 @@
    </div>
 
    <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background:none;" >
+      <div class="card" style="margin-bottom:0px; background-color: #8C924A;" >
          <div class="card-header" style="border-bottom:0px">
             Total Received
          </div>
@@ -124,7 +124,7 @@
    </div>
 
    <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/daily-income-history'">
+      <div class="card" style="margin-bottom:0px; background-color: #127D9B;cursor: pointer" onclick="window.location.href='/account/daily-income-history'">
          <div class="card-header" style="border-bottom:0px">
             Principal &amp; Interest
          </div>
@@ -141,7 +141,7 @@
 
 
    <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/investment'">
+      <div class="card" style="margin-bottom:0px; background-color: #73988D;cursor: pointer" onclick="window.location.href='/account/investment'">
          <div class="card-header" style="border-bottom:0px">
             Remaining amount
          </div>
@@ -156,7 +156,7 @@
    </div>
 
    <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/investment'">
+      <div class="card" style="margin-bottom:0px; background-color: #006973;cursor: pointer" onclick="window.location.href='/account/investment'">
          <div class="card-header" style="border-bottom:0px">
             Days to receive interest
          </div>
@@ -172,7 +172,7 @@
 
    <!-- End item !-->      
    <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer" onclick="window.location.href='/account/direct-sales-onus'">
+      <div class="card" style="margin-bottom:0px; background-color: #5A9AB5;cursor: pointer" onclick="window.location.href='/account/direct-sales-onus'">
          <div class="card-header" style="border-bottom:0px">
             Direct commission    
          </div>
@@ -191,41 +191,36 @@
    
    
    <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer;" onclick="window.location.href='/account/generations-bonus'">
+      <div class="card" style="margin-bottom:0px; background-color: #00BDD6;cursor: pointer;" onclick="window.location.href='/account/generations-bonus'">
          <div class="card-header" style="border-bottom:0px">
             Indirect commission
          </div>
-         <div class="card-body">
-            <div class="half pull-left l-s-t-30">
-               <div class="box blue-1">
+         
+         <div class="card-body" style="padding: 0">
+            <div class="">
+               
+               <div class="box blue-1" >
                   <p></p>
-                  <span style="font-size:26px;">${{data.user['g_wallet'] | format_usd}}</span>
+                  <div class="pull-left" style="width: 50%">
+                     <p class="text-center" style="font-size:19px;    margin-top: 20px; color: #fff;
+                     padding: 0">${{data.user['g_wallet'] | format_usd}}</p>
+                     
+                  </div>
+                  <div class="pull-right" style="width: 50%">
+                     <p class="text-center" style="font-size:19px;    margin-top: 20px; color: #fff;
+                     padding: 0">0 ETH</p>
+                  </div>
                   
+                  <p></p>
                </div>
+               
             </div>
          </div>
       </div>
    </div>
-
+   <div class="clearfix"></div>
    <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background:none;" >
-         <div class="card-header" style="border-bottom:0px">
-            Bonus sales
-         </div>
-         <div class="card-body">
-            <div class="half pull-left l-s-t-30">
-               <div class="box blue-1">
-                  <p></p>
-                  <span style="font-size:26px;">0 ETH</span>
-                  
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-
-   <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer;" onclick="window.location.href='/account/generations-bonus'">
+      <div class="card" style="margin-bottom:0px; background-color: #5A9AB5;cursor: pointer;" >
          <div class="card-header" style="border-bottom:0px">
             MSL  
          </div>
@@ -240,7 +235,41 @@
          </div>
       </div>
    </div>
-   <div class="col-lg-3 nopadding">
+
+   <!-- <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;" >
+         <div class="card-header" style="border-bottom:0px">
+            Bonus sales
+         </div>
+         <div class="card-body">
+            <div class="half pull-left l-s-t-30">
+               <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">0 ETH</span>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+   </div> -->
+
+   <!-- <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background:none;cursor: pointer;" onclick="window.location.href='/account/generations-bonus'">
+         <div class="card-header" style="border-bottom:0px">
+            MSL  
+         </div>
+         <div class="card-body">
+            <div class="half pull-left l-s-t-30">
+               <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">{{data.user['coin_wallet'] | format_usds}}</span>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+   </div> -->
+   <!-- <div class="col-lg-3 nopadding">
       <div class="card" style="margin-bottom:0px; background:none;cursor: pointer;" onclick="window.location.href='/account/system'">
          <div class="card-header" style="border-bottom:0px">
             Number F1  
@@ -255,7 +284,7 @@
             </div>
          </div>
       </div>
-   </div>
+   </div> -->
 </div>
 <!-- <div class="row">
    <div class="slider">

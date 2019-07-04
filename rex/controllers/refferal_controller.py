@@ -2,7 +2,7 @@ from flask import Blueprint, request, session, redirect, url_for, render_templat
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from rex import app, db
 from rex.models import user_model, deposit_model, history_model, invoice_model
-
+from bson.objectid import ObjectId
 __author__ = 'carlozamagni'
 
 refferal_ctrl = Blueprint('refferal', __name__, static_folder='static', template_folder='templates')
@@ -37,6 +37,8 @@ def refferal():
 	f1_noactive = db.User.find({'$and' :[{'p_node': uid},{"level": 0}]})
 	f1_active_no_tree = db.User.find({'$and' :[{'p_node': uid},{'p_binary' : ''},{"level": { "$gt": 0 }}]})
 	f1_active_tree = db.User.find({'$and' :[{'p_node': uid},{ 'p_binary': {'$ne' : ''}},{"level": { "$gt": 0 }}]})
+
+
 
 	data ={
 		'f1_noactive' : f1_noactive,
@@ -112,29 +114,49 @@ def system():
 
 
 
-	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
-	uid = session.get('uid')
-	
-	
-	user = db.User.find_one({'customer_id': uid})
+    if session.get(u'logged_in') is None:
+        return redirect('/user/login')
+    uid = session.get('uid')
+
+    user = db.User.find_one({'customer_id': uid})
 
 
-	list_notifications = db.notifications.find({'$and' : [{'read' : 0},{'status' : 0},{'$or' : [{'uid' : uid},{'type' : 'all'}]}]})
-	number_notifications = list_notifications.count()
-	tree = {
-		"customer_id":str(user['customer_id']),
-		"creation":str(user['creation'].strftime('%H:%M %d-%m-%Y')),
-		"fl":0,
-		"children" : []
-	}
-	array = []
-	children_tree(tree,array,0)
-	array = sorted(array, key=lambda k: k['floor']) 
-	data ={
-		'list_member':array,
-		'count_f1' : db.User.find({'$and' : [{'p_node': uid},{ 'investment': { '$gt': 0 } }]}).count(),
-		'user' : user,
-		'number_notifications' : number_notifications
-	}
-	return render_template('account/system.html', data=data)
+    list_notifications = db.notifications.find({'$and' : [{'read' : 0},{'status' : 0},{'$or' : [{'uid' : uid},{'type' : 'all'}]}]})
+    number_notifications = list_notifications.count()
+    
+    list_member = db.users.find({'p_node': uid})
+
+    data ={
+        'list_member':list_member,
+        'count_f1' : db.User.find({'$and' : [{'p_node': uid},{ 'investment': { '$gt': 0 } }]}).count(),
+        'user' : user,
+        'email' : user['email'],
+        'number_notifications' : number_notifications
+    }
+    return render_template('account/system.html', data=data)
+
+@refferal_ctrl.route('/system/<_id>', methods=['GET', 'POST'])
+def system_member(_id):
+
+
+
+    if session.get(u'logged_in') is None:
+        return redirect('/user/login')
+    uid = session.get('uid')
+
+    user = db.User.find_one({'customer_id': uid})
+
+
+    list_notifications = db.notifications.find({'$and' : [{'read' : 0},{'status' : 0},{'$or' : [{'uid' : uid},{'type' : 'all'}]}]})
+    number_notifications = list_notifications.count()
+    
+    list_member = db.users.find({'p_node': _id})
+
+    data ={
+        'list_member':list_member,
+        'count_f1' : db.User.find({'$and' : [{'p_node': uid},{ 'investment': { '$gt': 0 } }]}).count(),
+        'user' : user,
+        'email' : db.User.find_one({'_id': ObjectId(_id)})['email'],
+        'number_notifications' : number_notifications
+    }
+    return render_template('account/system.html', data=data)

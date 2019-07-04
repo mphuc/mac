@@ -11496,10 +11496,10 @@ div.widget-last-second {
     background-size: 100%; 
 }
 .nopadding {
-    padding-right: 0px;
-    padding-left: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 .card {
     position: relative;
@@ -11539,7 +11539,7 @@ div.widget-last-second {
     color: #fff;
 }
 .nopadding .card{
-  min-height: 147px;
+  min-height: 120px;
   margin-top: 0px;
 }
 .bx-prev,.bx-next{

@@ -14,7 +14,7 @@
 <div class="section__content section__content--p30">
    <div class="card">
       <div class="card-header">
-         <strong class="card-title">Member - <span style="color: #093454;">{{data.count_f1}} F1 Active</span></strong>
+         <strong class="card-title">List Member <span style="color: #093454;">{{data.email}}</span></strong>
       </div>
       <div class="card-body">
          <div class="">
@@ -24,7 +24,7 @@
                   <thead>
                      <tr>
                         <th>No.</th>
-                        <th>Floor</th>
+                        
                         <th>Join Date</th>
                         <th>Email</th>
                         <th>Country</th>
@@ -37,9 +37,9 @@
                      {% for item in data.list_member %}
                      <tr>
                         <td></td>
-                        <td>{{ item.floor }}</td>
+                        
                         <td>{{ item.creation | format_date }}</td>
-                        <td>{{ item.email }}</td>
+                        <td><a href="/account/system/{{item._id}}">{{ item.email }}</a></td>
                         <td>{{ item.country }}</td>
                         <td>${{ item.investment | format_usd }}</td>
                         <td>${{ item.total_node | format_usd }}</td>
