@@ -82,6 +82,7 @@ def children_tree (json,array,floor):
             "country" : x['country'],
             "investment" : x['investment'],
             "creation":x['creation'],
+            "total_node":x['total_node'],
             "children" : []
         }
         count_f1 = db.User.find({'p_node': str(x['customer_id'])}).count()
@@ -99,7 +100,8 @@ def children_tree (json,array,floor):
             "floor":"F"+str(floor),
             "sponsor" :  (str(sponsor_name)),
             "country" : x['country'],
-            "investment" : x['investment']
+            "investment" : x['investment'],
+            "total_node":x['total_node'],
         }
         array.append(children)
         json['children'].append(tree)
