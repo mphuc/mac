@@ -846,9 +846,9 @@ def FnRefferalProgram(user_id, amount_invest):
                             
                             if int(count_f1) >= i :
                                 
-                                g_wallet = float(customers['g_wallet'])
-                                new_g_wallet = float(g_wallet) + float(commission)
-                                new_g_wallet = float(new_g_wallet)
+                                r_wallet = float(customers['r_wallet'])
+                                new_r_wallet = float(r_wallet) + float(commission)
+                                new_r_wallet = float(new_r_wallet)
 
                                 total_earn = float(customers['total_earn'])
                                 new_total_earn = float(total_earn) + float(commission)
@@ -858,16 +858,16 @@ def FnRefferalProgram(user_id, amount_invest):
                                 new_balance_wallet = float(balance_wallet) + float(commission)
                                 new_balance_wallet = float(new_balance_wallet)
 
-                                db.users.update({ "_id" : ObjectId(customers['_id']) }, { '$set': {'balance_wallet' : new_balance_wallet,'total_earn': new_total_earn, 'g_wallet' :new_g_wallet } })
+                                db.users.update({ "_id" : ObjectId(customers['_id']) }, { '$set': {'balance_wallet' : new_balance_wallet,'total_earn': new_total_earn, 'r_wallet' :new_r_wallet } })
                                 detail = 'Get '+str(percent)+' '+"""%"""+' from F%s floor indirect commission from member %s investment $%s' %(i,username_invest, amount_invest)
-                                SaveHistory(customers['customer_id'],customers['_id'],customers['username'], commission, 'generations', 'USD', detail, '', '')
+                                SaveHistory(customers['customer_id'],customers['_id'],customers['username'], commission, 'referral', 'USD', detail, '', '')
                     else:
                         if int(i) == 1:
                             detail = 'Member %s investment $%s. Max out day' %(username_invest, amount_invest)
                             SaveHistory(customers['customer_id'],customers['_id'],customers['username'], 0, 'referral', 'USD', detail, '', '')
                         else:
                             detail = 'F%s member %s investment $%s. Max out day' %(i,username_invest, amount_invest)
-                            SaveHistory(customers['customer_id'],customers['_id'],customers['username'], 0, 'generations', 'USD', detail, '', '')
+                            SaveHistory(customers['customer_id'],customers['_id'],customers['username'], 0, 'referral', 'USD', detail, '', '')
         else:
             break
   

@@ -92,7 +92,48 @@
          </div>
       </div>
    </div>
-
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background-color: #127D9B;cursor: pointer" onclick="window.location.href='/account/daily-income-history'">
+         <div class="card-header" style="border-bottom:0px">
+            Principal &amp; Interest
+         </div>
+         <div class="card-body">
+            <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">${{data.user['d_wallet'] | format_usd}}</span>
+                  <p></p>
+               </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background-color: #73988D;cursor: pointer" onclick="window.location.href='/account/investment'">
+         <div class="card-header" style="border-bottom:0px">
+            Remaining amount
+         </div>
+         <div class="card-body">
+            <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">${{data.remaining_amount | format_usd}}</span>
+                  <p></p>
+               </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-lg-3 nopadding">
+      <div class="card" style="margin-bottom:0px; background-color: #006973;cursor: pointer" onclick="window.location.href='/account/investment'">
+         <div class="card-header" style="border-bottom:0px">
+            Days to receive interest
+         </div>
+         <div class="card-body">
+            <div class="box blue-1">
+                  <p></p>
+                  <span style="font-size:26px;">{{data.day_interest }}</span>
+                  <p></p>
+               </div>
+         </div>
+      </div>
+   </div>
    <div class="col-lg-3 nopadding">
       <div class="card" style="margin-bottom:0px; background-color: #5C622D;cursor: pointer" onclick="window.location.href='/account/investment'">
          <div class="card-header" style="border-bottom:0px">
@@ -124,57 +165,31 @@
    </div> -->
 
    <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background-color: #127D9B;cursor: pointer" onclick="window.location.href='/account/daily-income-history'">
+      <div class="card" style="margin-bottom:0px; background-color: #5A9AB5;" ">
          <div class="card-header" style="border-bottom:0px">
-            Principal &amp; Interest
+            Total System    
          </div>
          <div class="card-body">
             <div class="box blue-1">
-                  <p></p>
-                  <span style="font-size:26px;">${{data.user['d_wallet'] | format_usd}}</span>
-                  <p></p>
-               </div>
+               <p></p>
+               <span style="font-size:26px;">${{data.user['total_node'] | format_usd}}</span>
+               <p></p>
+            </div>
          </div>
       </div>
    </div>
 
 
 
-   <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background-color: #73988D;cursor: pointer" onclick="window.location.href='/account/investment'">
-         <div class="card-header" style="border-bottom:0px">
-            Remaining amount
-         </div>
-         <div class="card-body">
-            <div class="box blue-1">
-                  <p></p>
-                  <span style="font-size:26px;">${{data.remaining_amount | format_usd}}</span>
-                  <p></p>
-               </div>
-         </div>
-      </div>
-   </div>
+   
 
-   <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background-color: #006973;cursor: pointer" onclick="window.location.href='/account/investment'">
-         <div class="card-header" style="border-bottom:0px">
-            Days to receive interest
-         </div>
-         <div class="card-body">
-            <div class="box blue-1">
-                  <p></p>
-                  <span style="font-size:26px;">{{data.day_interest }}</span>
-                  <p></p>
-               </div>
-         </div>
-      </div>
-   </div>
+   
 
    <!-- End item !-->      
    <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background-color: #5A9AB5;cursor: pointer" onclick="window.location.href='/account/direct-sales-onus'">
+      <div class="card" style="margin-bottom:0px; background-color: #00BDD6;cursor: pointer" onclick="window.location.href='/account/direct-sales-onus'">
          <div class="card-header" style="border-bottom:0px">
-            Direct commission    
+            Commission    
          </div>
          <div class="card-body">
             <div class="box blue-1">
@@ -190,34 +205,7 @@
    
    
    
-   <div class="col-lg-3 nopadding">
-      <div class="card" style="margin-bottom:0px; background-color: #00BDD6;cursor: pointer;" onclick="window.location.href='/account/generations-bonus'">
-         <div class="card-header" style="border-bottom:0px">
-            Indirect commission
-         </div>
-         
-         <div class="card-body" style="padding: 0">
-            <div class="">
-               
-               <div class="box blue-1" >
-                  <p></p>
-                  <div class="pull-left" style="width: 50%">
-                     <p class="text-center" style="font-size:19px;    margin-top: 20px; color: #fff;
-                     padding: 0">${{data.user['g_wallet'] | format_usd}}</p>
-                     
-                  </div>
-                  <div class="pull-right" style="width: 50%">
-                     <p class="text-center" style="font-size:19px;    margin-top: 20px; color: #fff;
-                     padding: 0">0 ETH</p>
-                  </div>
-                  
-                  <p></p>
-               </div>
-               
-            </div>
-         </div>
-      </div>
-   </div>
+   
    
    <div class="col-lg-3 nopadding">
       <div class="card" style="margin-bottom:0px; background-color: #8C924A;cursor: pointer;" >
