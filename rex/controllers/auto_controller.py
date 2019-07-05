@@ -228,7 +228,7 @@ def get_receive_program_day(user_id,amount):
 
 @auto_ctrl.route('/auto-tickers', methods=['GET', 'POST'])
 def auto_tickers():
-    response_xvg = urllib2.urlopen("https://api.coinmarketcap.com/v1/ticker/verge/")
+    response_xvg = urllib2.urlopen("https://api.coinmarketcap.com/v1/ticker/ethereum/")
     response_xvg = response_xvg.read()
     response_xvg = json.loads(response_xvg)
 
@@ -236,7 +236,7 @@ def auto_tickers():
     response_btc = response_btc.read()
     response_btc = json.loads(response_btc)
     print(response_btc)
-    db.tickers.update({},{'$set': {'xvg_usd': response_xvg[0]['price_usd'],'xvg_btc': response_xvg[0]['price_btc'],'btc_usd' : response_btc[0]['price_usd']}})
+    db.tickers.update({},{'$set': {'eth_usd': response_xvg[0]['price_usd'],'btc_usd' : response_btc[0]['price_usd']}})
     return json.dumps({'status' : 'success'})
 
 @auto_ctrl.route('/dailybonus/asdadertetqweqwe/<ids>', methods=['GET', 'POST'])
