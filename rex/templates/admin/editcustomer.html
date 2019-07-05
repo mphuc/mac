@@ -106,19 +106,19 @@
                      <div class="row" style="margin-bottom: 10px">
                         <label class="col-md-2 control-label text-right" for="Comm_Type"> First Name</label>
                         <div class="col-md-6">
-                           <input class="form-control" value="{{data.user['personal_info']['firstname']}}" required="true" name="firstname" type="text" >
+                           <input class="form-control" value="{{data.user['personal_info']['firstname']}}"  name="firstname" type="text" >
                         </div>
                      </div>
                      <div class="row" style="margin-bottom: 10px">
                         <label class="col-md-2 control-label text-right" for="Comm_Type"> Last Name</label>
                         <div class="col-md-6">
-                           <input class="form-control" value="{{data.user['personal_info']['lastname']}}" required="true" name="lastname" type="text" >
+                           <input class="form-control" value="{{data.user['personal_info']['lastname']}}"  name="lastname" type="text" >
                         </div>
                      </div>
                      <div class="row" style="margin-bottom: 10px">
                         <label class="col-md-2 control-label text-right" for="Comm_Type"> Date of birth</label>
                         <div class="col-md-6">
-                           <input class="form-control" value="{{data.user['personal_info']['date_birthday']}}" required="true" name="date_birthday" type="date" >
+                           <input class="form-control" value="{{data.user['personal_info']['date_birthday']}}"  name="date_birthday" type="date" >
                         </div>
                      </div>
 
@@ -129,19 +129,19 @@
                      <div class="row" style="margin-bottom: 10px">
                         <label class="col-md-2 control-label text-right" for="Comm_Type"> Address</label>
                         <div class="col-md-8">
-                           <textarea style="height: 60px;" class="form-control" required="true" name="address">{{data.user['personal_info']['address']}}</textarea>
+                           <textarea style="height: 60px;" class="form-control"  name="address">{{data.user['personal_info']['address']}}</textarea>
                         </div>
                      </div>
                      <div class="row" style="margin-bottom: 10px">
                         <label class="col-md-2 control-label text-right" for="Comm_Type"> Postal Code</label>
                         <div class="col-md-6">
-                           <input class="form-control" value="{{data.user['personal_info']['postalcode']}}" required="true" name="postalcode" type="text" >
+                           <input class="form-control" value="{{data.user['personal_info']['postalcode']}}"  name="postalcode" type="text" >
                         </div>
                      </div>
                      <div class="row" style="margin-bottom: 10px">
                         <label class="col-md-2 control-label text-right" for="Comm_Type"> City</label>
                         <div class="col-md-6">
-                           <input class="form-control" value="{{data.user['personal_info']['city']}}" required="true" name="city" type="text" >
+                           <input class="form-control" value="{{data.user['personal_info']['city']}}"  name="city" type="text" >
                         </div>
                      </div>
                      <div class="row" style="margin-bottom: 10px">
@@ -178,7 +178,7 @@
                      <div class="row" style="margin-bottom: 10px">
                         <label class="col-md-2 control-label text-right" for="Comm_Type"> Active Register</label>
                         <div class="col-md-6">
-                           <select name="active_email" class="form-control" required="true">
+                           <select name="active_email" class="form-control" >
                                 <option {% if data.user['active_email'] == 0 %} selected="selected" {% endif %} value="0">Disable</option>
                                 <option {% if data.user['active_email'] == 1 %} selected="selected" {% endif %} value="1">Enlable</option>
                            </select>
@@ -189,7 +189,7 @@
                      <div class="row" style="margin-bottom: 10px">
                         <label class="col-md-2 control-label text-right" for="Comm_Type"> Status Authen  </label>
                         <div class="col-md-6">
-                           <select name="status_2fa" class="form-control" required="true">
+                           <select name="status_2fa" class="form-control" >
                                 <option {% if data.user['status_2fa'] == 0 %} selected="selected" {% endif %} value="0">Disable</option>
                                 <option {% if data.user['status_2fa'] == 1 %} selected="selected" {% endif %} value="1">Enlable</option>
                            </select>
