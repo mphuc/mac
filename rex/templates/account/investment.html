@@ -101,7 +101,7 @@
          }
          if (currency == 'ETH')
          {
-            var amount_usd = parseFloat(amount)/parseFloat(price_eth);
+            var amount_usd = (parseFloat(amount)/parseFloat(price_eth)).toFixed(8);
             $('#quantity_coin').val(amount_usd);
             convert_profit(amount);
          }
@@ -168,7 +168,7 @@
                      }
                      else
                      {
-                        html += '<p class="text-center"><img src="https://chart.googleapis.com/chart?chs=225x225&chld=L|2&cht=qr&chl=ethereum:'+result.address+'&value='+result.amount+'"></p>';
+                        html += '<p class="text-center"><img src="https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl='+result.address+'&value='+result.amount+'"></p>';
                      }
                      
 

@@ -19,6 +19,7 @@ import random
 import collections
 from rex.coinpayments import CoinPaymentsAPI
 from rex.config import Config
+
 ApiCoinpayment = CoinPaymentsAPI(public_key=Config().public_key,
                           private_key=Config().private_key)
 
@@ -212,13 +213,13 @@ def create_invoid():
         
         uid = session.get('uid')
         user = db.users.find_one({'customer_id': uid})
-        
+        amount_currency = round(float(request.form['amount']),8)
         if request.form['token_crt'] == session['token_crt']:
             ticker = db.tickers.find_one({})
             if request.form['currency'] == 'BTC':
-                amount_usd = float(ticker['btc_usd'])*float(request.form['amount'])
+                amount_usd = float(ticker['btc_usd'])*float(amount_currency)
             if request.form['currency'] == 'ETH':
-                amount_usd = float(ticker['eth_usd'])*float(request.form['amount']) 
+                amount_usd = float(ticker['eth_usd'])*float(amount_currency) 
  
             if float(amount_usd) >=250:
 
@@ -240,8 +241,8 @@ def create_invoid():
                             'uid' : uid,
                             'user_id': user['_id'],
                             'username' : user['email'],
-                            'amount' : request.form['amount'],
-                            'amount_usd' : round(amount_usd,2),
+                            'amount' : amount_currency,
+                            'amount_usd' : round(float(amount_usd),2),
                             'invoid_id' : invoid_id,
                             'txt' : '',
                             'callback' : url_callback,
@@ -254,7 +255,7 @@ def create_invoid():
 
                         token_crt = id_generator(15) 
                         session['token_crt'] = token_crt
-                        data = {'status' : 'complete','token_crt' : token_crt, 'address' : new_wallet,'amount' : request.form['amount'],'currency' : request.form['currency'],'amount_usd' : round(amount_usd,2)}
+                        data = {'status' : 'complete','token_crt' : token_crt, 'address' : new_wallet,'amount' : amount_currency,'currency' : request.form['currency'],'amount_usd' : round(amount_usd,2)}
                         return json.dumps(data)
                     else:
                         token_crt = id_generator(15) 
@@ -269,7 +270,7 @@ def create_invoid():
             else:
                 token_crt = id_generator(15) 
                 session['token_crt'] = token_crt
-                data = {'status' : 'error','token_crt' : token_crt,'message' : 'Investment package must be greater than or equal to $ 50.'}
+                data = {'status' : 'error','token_crt' : token_crt,'message' : 'Investment package must be greater than or equal to $ 250.'}
                 return json.dumps(data)
         else: 
             token_crt = id_generator(15) 
