@@ -109,8 +109,8 @@ def login():
     val_login = ''
     if request.method == 'POST':
         
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form['username'].replace(" ", "")
+        password = request.form['password'].replace(" ", "")
         recaptcha = request.form['g-recaptcha-response']
         if username == '':
             val_username = 'empty'
@@ -277,9 +277,9 @@ def create_user(sponsor_id,sponsor,country,email,password):
   code_active = id_generator(40)
   datas = {
     'customer_id' : customer_id,
-    'username': email.lower(),
-    'password': set_password(password),
-    'email': email.lower(),
+    'username': email.replace(" ", "").lower(),
+    'password': set_password(password.replace(" ", "")),
+    'email': email.replace(" ", "").lower(),
     'p_node': sponsor_id,
     'p_binary': '',
     'left': '',
