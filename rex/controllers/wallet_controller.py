@@ -81,7 +81,7 @@ def check_user_send(ids,ids_send):
 def homedeposit():
 	
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user_id = session.get('user_id')
@@ -107,7 +107,7 @@ def homedeposit():
 @wallet_ctrl.route('/withdraw', methods=['GET', 'POST'])
 def homewithdraw():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user_id = session.get('user_id')
@@ -128,8 +128,8 @@ def homewithdraw():
 
 				max_withdraw = float(user['investment'])*2.5
 				if int(user['status_verify']) != 2:
-					max_withdraw = 100
-				if is_number(quantity) == False  or quantity == '' or float(quantity) < 10:
+					max_withdraw = 30
+				if is_number(quantity) == False  or quantity == '' or float(quantity) < 30:
 					val_amount_usd = 'empty'
 				else:
 					if float(quantity) > float(max_withdraw):
@@ -235,7 +235,7 @@ def hometransfer():
 	#widthdaw_wallet('currency','amount_wr')
 	return False
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user_id = session.get('user_id')
@@ -366,7 +366,7 @@ def hometransfer():
 def get_new_address():
 	
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user_id = session.get('user_id')

@@ -374,7 +374,7 @@ def verify_totp(token, otp_secret):
 @user_ctrl.route('/change-password', methods=['GET', 'POST'])
 def change_password():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.users.find_one({'customer_id': uid})
     list_notifications = db.notifications.find({'$and' : [{'read' : 0},{'status' : 0},{'$or' : [{'uid' : uid},{'type' : 'all'}]}]})
@@ -391,7 +391,7 @@ def change_password():
 @user_ctrl.route('/my-profile', methods=['GET', 'POST'])
 def my_profile():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.users.find_one({'customer_id': uid})
 
@@ -428,7 +428,7 @@ def my_profile():
 @user_ctrl.route('/setting', methods=['GET', 'POST'])
 def settings():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.users.find_one({'customer_id': uid})
 
@@ -465,7 +465,7 @@ def settings():
 @user_ctrl.route('/verify-account', methods=['GET', 'POST'])
 def verify_accountsss():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.users.find_one({'customer_id': uid})
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -493,7 +493,7 @@ def verify_accountsss():
 @user_ctrl.route('/verify-account/identity', methods=['GET', 'POST'])
 def verify_account_identity():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.users.find_one({'customer_id': uid})
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -521,7 +521,7 @@ def verify_account_identity():
 @user_ctrl.route('/two-factor-auth', methods=['GET', 'POST'])
 def two_factor_auth():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.User.find_one({'customer_id': uid})
     if user['secret_2fa'] == '':
@@ -576,7 +576,7 @@ def Check2FA():
 @user_ctrl.route('/updateaccount', methods=['GET', 'POST'])
 def updateaccount():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.users.find_one({'customer_id': uid})
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -608,7 +608,7 @@ def updateaccount():
 @user_ctrl.route('/account/identity', methods=['GET', 'POST'])
 def identity():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.users.find_one({'customer_id': uid})
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -667,7 +667,7 @@ def identity():
 @user_ctrl.route('/updatewallet', methods=['GET', 'POST'])
 def updatewallet():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.User.find_one({'customer_id': uid})
     if request.method == 'POST':
@@ -697,7 +697,7 @@ def updatewallet():
 @user_ctrl.route('/update-password', methods=['GET', 'POST'])
 def update_password():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.User.find_one({'customer_id': uid})
     if request.method == 'POST':
@@ -747,7 +747,7 @@ def send_mail_update_wallet(email,link_active):
 @user_ctrl.route('/update-wallet-address', methods=['GET', 'POST'])
 def update_wallet_address():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.User.find_one({'customer_id': uid})
     if request.method == 'POST':
@@ -786,7 +786,7 @@ def update_wallet_address():
 @user_ctrl.route('/update-wallet-address/<code>', methods=['GET', 'POST'])
 def update_wallet_address_active(code):
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     
     get_wallet = db.updatewallets.find_one({'$and' : [{'code' : code},{'status' : 0}]})  
     if get_wallet is not None:
@@ -805,7 +805,7 @@ def update_wallet_address_active(code):
 @user_ctrl.route('/update-tran-password', methods=['GET', 'POST'])
 def update_tran_password():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.User.find_one({'customer_id': uid})
     if request.method == 'POST':
@@ -891,7 +891,7 @@ def signup_intree(positon, p_binary, p_node):
     return render_template('account/signup_in_tree.html', data=value)
 @user_ctrl.route('/registersubmit_intree', methods=['GET', 'POST'])
 def registersubmit_intree():
-    #return redirect('/user/login')
+    #return redirect('/auth/login')
     if request.method == 'POST':
         sponser = db.User.find_one({'customer_id': request.form['ref']})
         if sponser is None:
@@ -1083,15 +1083,15 @@ def registersubmit_intree():
             return redirect('/user/register/%s'%(request.form['ref']))
 
     else:
-        return redirect('/user/login')
+        return redirect('/auth/login')
 @user_ctrl.route('/registersubmit', methods=['GET', 'POST'])
 def signupsubmit():
-    #return redirect('/user/login')
+    #return redirect('/auth/login')
     if request.method == 'POST':
         sponser = db.User.find_one({'customer_id': request.form['ref']})
         if sponser is None:
             flash({'msg':'Sponsor dose not exits', 'type':'error'})
-            return redirect('/user/login')
+            return redirect('/auth/login')
       
         if request.form['fullname'] == '' or request.form['login'] == '' or request.form['password'] == '' or request.form['email'] == '' or request.form['ref'] == '' or request.form['telephone'] == '' or request.form['position'] == '':
             flash({'msg':'Please enter a valid form!', 'type':'error'})
@@ -1261,7 +1261,7 @@ def signupsubmit():
             return redirect('/user/register/%s'%(request.form['ref']))
 
     else:
-        return redirect('/user/login')
+        return redirect('/auth/login')
 
 
 @user_ctrl.route('/activecode/<customer_id>', methods=['GET', 'POST'])
@@ -1381,7 +1381,7 @@ def new():
             'current_max_daily': 0
         }
         db.users.insert(datas)
-        return redirect('/user/login')
+        return redirect('/auth/login')
     return render_template('user/new.html')
 def adduser(name,email, s_left,s_right,s_p_node,s_p_binary,s_token, s_id):
       user = db.User()

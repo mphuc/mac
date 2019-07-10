@@ -122,7 +122,7 @@ def total_node_right(customer_id):
 def dashboard():
 
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user = db.users.find_one({'customer_id': uid})
@@ -189,7 +189,7 @@ def dashboard():
 @dashboard_ctrl.route('/information-center', methods=['GET', 'POST'])
 def informationcenter():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user = db.users.find_one({'customer_id': uid})
@@ -211,7 +211,7 @@ def informationcenter():
 def list_notifications():
 
 	if session.get('logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user = db.users.find_one({'customer_id': uid})
@@ -237,7 +237,7 @@ def list_notifications():
 def notifications(id_notification):
 
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user = db.users.find_one({'customer_id': uid})
@@ -262,7 +262,7 @@ def notifications(id_notification):
 def code():
 
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user = db.User.find_one({'customer_id': uid})
@@ -285,7 +285,7 @@ def code():
 @dashboard_ctrl.route('/getNewRefferal', methods=['GET', 'POST'])
 def getNewRefferal():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		user_id = session.get('user_id')
 		uid = session.get('uid')
@@ -402,13 +402,13 @@ def LoopPNode(customer_id_list):
 @dashboard_ctrl.route('/add-tree/<username>', methods=['GET', 'POST'])
 def getdataTree(username):
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		user_id = session.get('user_id')
 		uid = session.get('uid')
 		user = db.users.find_one({'username': username})
 		if user is None:
-			return redirect('/user/login')
+			return redirect('/auth/login')
 		customer_id = []
 		customer_id.append(str(uid))
 		page_sanitized = json_util.dumps(LoopPNode(customer_id))

@@ -61,7 +61,7 @@ def sdfasdf():
 @ico_ctrl.route('/ico', methods=['GET', 'POST'])
 def icoCtrl():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user = db.User.find_one({'customer_id': uid})

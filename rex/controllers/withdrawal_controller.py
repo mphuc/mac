@@ -23,7 +23,7 @@ def check_password(pw_hash, password):
 @withdrawal_ctrl.route('/withdrawal', methods=['GET', 'POST'])
 def withdraw():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user = db.User.find_one({'customer_id': uid})
@@ -44,7 +44,7 @@ def withdraw():
 @withdrawal_ctrl.route('/withdraw-submit', methods=['GET', 'POST'])
 def Submit():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	else:
 		uid = session.get('uid')
 		user = db.User.find_one({'customer_id': uid})

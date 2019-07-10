@@ -16,7 +16,7 @@ support_ctrl = Blueprint('support', __name__, static_folder='static', template_f
 def support():
 	#return redirect('/account/login')
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	uid = session.get('uid')
 	user_id = session.get('user_id')
 	query = db.supports.find({'user_id': user_id})
@@ -37,7 +37,7 @@ def support():
 @support_ctrl.route('/new-support', methods=['GET', 'POST'])
 def newsupports():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	uid = session.get('uid')
 	user_id = session.get('user_id')
 	query = db.supports.find({'user_id': user_id})
@@ -58,7 +58,7 @@ def newsupports():
 @support_ctrl.route('/support/<ids>', methods=['GET', 'POST'])
 def Replysupport(ids):
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	uid = session.get('uid')
 	user_id = session.get('user_id')
 	support = db.supports.find_one({'_id': ObjectId(ids)})
@@ -81,7 +81,7 @@ def Replysupport(ids):
 def newsupporReplyt():
 	if session.get(u'logged_in') is None:
 		flash({'msg':'Please login', 'type':'danger'})
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	if request.method == 'POST':
 		user_id = session.get('user_id')
 		sp_id = request.form['sp_id']
@@ -131,7 +131,7 @@ def newsupporReplyt():
 def newsupportsubmit():
 	if session.get(u'logged_in') is None:
 		flash({'msg':'Please login', 'type':'danger'})
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	if request.method == 'POST':
 		user_id = session.get('user_id')
 		user = db.users.find_one({'_id': ObjectId(user_id)})

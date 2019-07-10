@@ -62,7 +62,7 @@ def deposit():
     #FnRefferalProgram('62019241100', 1000)
 
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     user = db.users.find_one({'customer_id': uid})
 
@@ -281,7 +281,7 @@ def create_invoid():
 @deposit_ctrl.route('/investment/return-balance', methods=['GET', 'POST'])
 def return_balance():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     
     investment = db.investments.find_one({'$and' : [{'status' : 0},{'uid': uid}]} )
@@ -310,7 +310,7 @@ def return_balance():
 @deposit_ctrl.route('/investment/re-investment', methods=['GET', 'POST'])
 def re_investment():
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     
     investment = db.investments.find_one({'$and' : [{'status' : 0},{'uid': uid}]} )
@@ -879,7 +879,7 @@ def FnRefferalProgram(user_id, amount_invest):
 def AddTreeSubmit(p_binary,position):
     
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
     
 

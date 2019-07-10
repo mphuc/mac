@@ -21,7 +21,7 @@ def refferal():
 
 
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	uid = session.get('uid')
 	
 	
@@ -115,7 +115,7 @@ def system():
 
 
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
 
     user = db.User.find_one({'customer_id': uid})
@@ -141,7 +141,7 @@ def system_member(_id):
 
 
     if session.get(u'logged_in') is None:
-        return redirect('/user/login')
+        return redirect('/auth/login')
     uid = session.get('uid')
 
     user = db.User.find_one({'customer_id': uid})

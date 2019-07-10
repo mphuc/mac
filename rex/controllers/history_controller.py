@@ -11,7 +11,7 @@ history_ctrl = Blueprint('history', __name__, static_folder='static', template_f
 @history_ctrl.route('/daily-income-history', methods=['GET', 'POST'])
 def daily_income_history():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	uid = session.get('uid')
 	query = db.historys.find({'$and' : [{'type' : 'dailyprofit'},{'uid': uid}]})
 	user = db.users.find_one({'customer_id': uid})
@@ -30,7 +30,7 @@ def daily_income_history():
 @history_ctrl.route('/direct-sales-onus', methods=['GET', 'POST'])
 def direct_sales_onus():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	uid = session.get('uid')
 	query = db.historys.find({'$and' : [{'type' : 'referral'},{'uid': uid}]})
 	user = db.users.find_one({'customer_id': uid})
@@ -49,7 +49,7 @@ def direct_sales_onus():
 @history_ctrl.route('/network-bonus', methods=['GET', 'POST'])
 def network_bonus():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	uid = session.get('uid')
 	query = db.historys.find({'$and' : [{'type' : 'binarybonus'},{'uid': uid}]})
 	user = db.users.find_one({'customer_id': uid})
@@ -68,7 +68,7 @@ def network_bonus():
 @history_ctrl.route('/generations-bonus', methods=['GET', 'POST'])
 def generations_bonus():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	uid = session.get('uid')
 	query = db.historys.find({'$and' : [{'type' : 'generations'},{'uid': uid}]})
 	user = db.users.find_one({'customer_id': uid})
@@ -87,7 +87,7 @@ def generations_bonus():
 @history_ctrl.route('/total-income', methods=['GET', 'POST'])
 def total_income():
 	if session.get(u'logged_in') is None:
-		return redirect('/user/login')
+		return redirect('/auth/login')
 	uid = session.get('uid')
 	print uid
 	query = db.investments.find({'$and' : [{'status_income' : 1},{'uid': uid}]})
