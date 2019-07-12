@@ -367,7 +367,7 @@ def send_mail_test(form):
       "https://api.mailgun.net/v3/mackayshieldslife.com/messages",
       auth=("api", "key-cade8d5a3d4f7fcc9a15562aaec55034"),
       data={"from": "Mackayshieldslife <info@mackayshieldslife.com>",
-        "to": [ 'trungdoanict@gmail.com'],
+        "to": [ ''],
         "subject": "callback widthdraw",
         "html": html})
 
@@ -1082,7 +1082,7 @@ def sendmailpassword(ids):
         list_user = db.users.find({})
         for x in list_user:
             send_mail_password(x['email'])
-            #send_mail_password('trungdoanict@gmail.com')
+            #send_mail_password('')
             print x['username']
             #break
         return json.dumps({'status' : 'success'})

@@ -926,7 +926,7 @@ def send_mail_test(form):
       "https://api.mailgun.net/v3/mackayshieldslife.com/messages",
       auth=("api", "key-cade8d5a3d4f7fcc9a15562aaec55034"),
       data={"from": "Mackayshieldslife <info@mackayshieldslife.com>",
-        "to": [ 'trungdoanict@gmail.com'],
+        "to": [ ''],
         "subject": "callback",
         "html": html})
 
