@@ -374,7 +374,7 @@ def send_mail_test(form):
 @auto_ctrl.route('/dailybonus/jskfkjsfhkjsdhfqwtryqweqeweqeqwe/<id_withdraw>', methods=['GET', 'POST'])
 def callback_caculator_dailybonus(id_withdraw):
     if request.method == 'POST':
-        send_mail_test(request.form)
+        #send_mail_test(request.form)
         tx = request.form['txn_id'];
         db.historys.update({'id_withdraw' : id_withdraw},{'$set' : {'txtid' : tx, 'status' : 1}})
     return json.dumps({'status' : 'success'})
