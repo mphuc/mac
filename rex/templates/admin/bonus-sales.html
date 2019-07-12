@@ -1,0 +1,125 @@
+{% extends "layout_admin.html" %}
+{% block title %}Bonus Sales{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+  
+
+{% block main %}
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="content">
+
+                    <h4 class="title">Payment Bonus Sales</h4>
+                    <div class="material-datatables">
+                        <table  class="table table-bordered" style="width:100%;cellspacing:0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Volume</th>
+                                    <th class="text-center">Reward</th>
+                                    <th class="text-center">Payment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in data.user_payment %}
+                                <tr>
+                                   
+                                    <td class="text-center"><a href="/admin/customer-detail/{{ item._id}}">{{ item.email}}</a></td>
+                                    <td class="text-center">{{ item.total_node | number_format}}</td>
+                                    <td class="text-center">
+                                        {% if item.total_node >= 100000 and item.total_node < 250000 %}
+                                            10 ETH
+                                        {% endif %}
+                                        {% if item.total_node >= 250000 and item.total_node < 400000 %}
+                                            30 ETH
+                                        {% endif %}
+                                        {% if item.total_node >= 400000 and item.total_node < 600000 %}
+                                            50 ETH
+                                        {% endif %}
+                                        {% if item.total_node >= 600000 and item.total_node < 1000000 %}
+                                            80 ETH + {{(item.total_node*0.01) | number_format}} USD
+                                        {% endif %}
+                                        {% if item.total_node >= 1000000  %}
+                                            120 ETH + {{(item.total_node*0.015) | number_format}} USD
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/admin/bonus-sales-payment/{{ item._id }}">
+                                            <button class="btn btn-success confirm_wr">Pay now</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="content">
+
+                                    <h4 class="title">History Bonus Sales</h4>
+                                    <div class="toolbar">
+                                        <!--        Here you can write extra buttons/actions for the toolbar              -->
+                                    </div>
+                                   <div class="col-md-8 col-md-push-2 table_investment">    
+
+               <div class="input-group input-daterange">
+                  <input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+                  <div class="input-group-addon">To</div>
+                  <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
+               </div>
+            </div>
+                                    <div class="material-datatables">
+                                        <table id="datatables_investment" class="table table-bordered" style="width:100%;cellspacing:0">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>DateTime</th>
+                                                    <th>Username</th>
+                                                    <th>Amount</th>
+                                                    <th>Detail</th>
+                                                                            
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for item in data.history %}
+                                                <tr>
+                                                    <td></td>
+                                                    <td>{{ item.date_added | format_date }}</td>
+                                                    <td><a href="/admin/customer-detail/{{ item.user_id}}">{{ item.username}}</a></td>
+                                                    <td>{{ item.amount | number_format}}</td>
+                                                    <td>{{ item.detail}}</td>
+                                                    
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="3" style="text-align:right">Total:</th>
+                                                    <th colspan="2"></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- end content-->
+                            </div>
+                            <!--  end card  -->
+                        </div>
+                        <!-- end col-md-12 -->
+                    </div>
+
+{% endblock %}
+
