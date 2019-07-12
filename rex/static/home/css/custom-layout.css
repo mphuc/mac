@@ -503,6 +503,33 @@ a:hover {
 	float:right;
 	width:78%;
 	font-size:12px;
+	overflow-y: hidden;
+    height: 320px;
+    
+}
+.advisor-info:hover{
+	overflow-y: scroll;
+}
+.advisor-info::-webkit-scrollbar-track
+{	
+
+	-webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+	border-radius: 2px;
+	background-color: #EEE;
+}
+
+.advisor-info::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: #EEE;
+}
+
+.advisor-info::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #0A3454;
+
 }
 .advisor-info h3{
 	color:#0f1923;
