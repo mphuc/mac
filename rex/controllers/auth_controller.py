@@ -583,7 +583,7 @@ def dashboarupdate_weerpassword(emails):
 
 def mail_reset_pass(email,username_user,link_active):
     
-
+    print email,username_user,link_active
     html = """
         <table  cellpadding="0" cellspacing="0" style=" font-family: Calibri;border: 1px solid #eee" width="600"><tbody ><tr style="padding:0 0 0 0"><td style="background-color: #2C3234; text-align: center;" colspan="2"> <br> <img width="300"  src="https://i.ibb.co/MMxpJM5/logo.png" class="CToWUd"><br> <br> </td> </tr> <tr> <td width="25" style="border:white"></td> <td style="border:white"> <br>
       
