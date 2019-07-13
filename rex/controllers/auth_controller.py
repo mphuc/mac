@@ -182,7 +182,7 @@ def signup(id_sponsor):
       sponsor = request.form['sponsor']
       country = request.form['country']
       email = request.form['email']
-      
+      username = request.form['username']
       password = request.form['password']
       #terms = 
       recaptcha = request.form['g-recaptcha-response']
@@ -191,7 +191,7 @@ def signup(id_sponsor):
       if sponsor == '':
         val_sponsor = 'empty'
       else:
-        check_sponser = db.User.find_one({'customer_id': sponsor})
+        check_sponser = db.User.find_one({'username': sponsor})
         if check_sponser is None:
             val_sponsor = 'not'
 
@@ -234,12 +234,12 @@ def signup(id_sponsor):
         val_terms = 'empty' 
 
       if val_sponsor == '' and val_country == '' and val_email == '' and val_password == '' and val_terms == '' and val_recaptcha == '':
-        # check_user = db.users.find_one({ 'email': email })
-        # if check_user is None:
-        create_user(check_sponser.customer_id,sponsor,country,email,password)
-        val_register = 'complete'
-        # else:
-        #     val_checkemail = 'not'
+        check_user = db.users.find_one({ 'username': username })
+        if check_user is None:
+            create_user(check_sponser.customer_id,sponsor,country,email,username,password)
+            val_register = 'complete'
+        else:
+            val_checkemail = 'not'
         #flash({'msg':'Account successfully created. Please check your email to activate your account', 'type':'success'})
         #return redirect('/auth/register/'+str(email)) 
 
@@ -272,13 +272,13 @@ def signup(id_sponsor):
     return render_template('register.html', data=value)
 
 
-def create_user(sponsor_id,sponsor,country,email,password):
+def create_user(sponsor_id,sponsor,country,email,username,password):
   localtime = time.localtime(time.time())
   customer_id = '%s%s%s%s%s%s'%(localtime.tm_sec,localtime.tm_mon,localtime.tm_hour,localtime.tm_year,localtime.tm_mday,localtime.tm_min)
   code_active = id_generator(40)
   datas = {
     'customer_id' : customer_id,
-    'username': customer_id,
+    'username': username.replace(" ", "").lower(),
     'password': set_password(password.replace(" ", "")),
     'email': email.replace(" ", "").lower(),
     'p_node': sponsor_id,
@@ -348,9 +348,9 @@ def create_user(sponsor_id,sponsor,country,email,password):
   }
   customer = db.users.insert(datas)
 
-  send_mail_register(customer_id,email,password,country,sponsor,'https://mackayshieldslife.com/user/active/'+str(code_active))
+  send_mail_register(username,email,password,country,sponsor,'https://mackayshieldslife.com/user/active/'+str(code_active))
   return True
-def send_mail_register(id_login,email,password,country,sponsor,link_active):
+def send_mail_register(username,email,password,country,sponsor,link_active):
     
     html = """
         <table  cellpadding="0" cellspacing="0" style=" font-family: Calibri;border: 1px solid #eee" width="600"><tbody ><tr style="padding:0 0 0 0"><td style="background-color: #2C3234; text-align: center;" colspan="2"> <br> <img width="300"  src="https://i.ibb.co/MMxpJM5/logo.png" class="CToWUd"><br> <br> </td> </tr> <tr> <td width="25" style="border:white"></td> <td style="border:white"> <br>
@@ -361,7 +361,7 @@ def send_mail_register(id_login,email,password,country,sponsor,link_active):
       <p>Thank you for enrolling!</p>
       <p>Your registration information: </p>
       <p style="text-align:left">
-        <strong>ID Login: """+str(id_login)+"""</strong>
+        <strong>Username Login: """+str(username)+"""</strong>
       </p>
       <p style="text-align:left">
         <strong>Email: """+str(email)+"""</strong>

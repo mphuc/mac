@@ -39,14 +39,23 @@
          {% if data.val_register == '' %}
             <h1>Create Account</h1>
             <form class="form-horizontal" role="form" name="login" action="/auth/register/{{data.id_sponsor}}" method="POST">
+              <div class="form-group">
+                  <label>Username <span class="text-danger">*</span></label>
+                  <div class="login-field pull-left">
+                     <i class="fa fa-envelope-o pull-left"></i>
+                     <input autocomplete="off" type="text" class="form-control pull-left" name="username"  id="" placeholder="Your  username"  value="{% if data.form and data.val_register == ''%}{{data.form['username']}}{% endif %}">
+                     
+                  </div>
+                  
+               </div>
                <div class="form-group">
                   <label>Email <span class="text-danger">*</span></label>
                   <div class="login-field pull-left">
                      <i class="fa fa-envelope-o pull-left"></i>
                      <input autocomplete="off" type="text" class="form-control pull-left" name="email"  id="Username" placeholder="Your  email"  value="{% if data.form and data.val_register == ''%}{{data.form['email']}}{% endif %}">
-                     <!--login-field-->
+                     
                   </div>
-                  <!--form-group-->
+                  
                </div>
                <div class="form-group">
                   <label>Country <span class="text-danger">*</span></label>
@@ -168,7 +177,7 @@
          {% if data.val_checkemail == 'not' %}
             <script type="text/javascript">
                 $().toastmessage('showToast',{
-                      text     : "The mail address already exists in the system.",
+                      text     : "The username address already exists in the system.",
                       sticky   : false,
                       position : 'top-right',
                       type     : 'error'
@@ -270,13 +279,22 @@
             return regex.test(email);
         }
         $('form').on('submit',function(event){
-
+            var username = $('form input[name="username"]').val();
             var email = $('form input[name="email"]').val();
             var password = $('form input[name="password"]').val();
             var repassword = $('form input[name="re-password"]').val();
             var sponsor = $('form input[name="sponsor"]').val();
             var terms = $('form input[name="terms"]').prop("checked");
-           
+            if (username == '')
+            {
+                $().toastmessage('showToast',{
+                    text     : "Please enter your username.",
+                    sticky   : false,
+                    position : 'top-right',
+                    type     : 'error'
+                });
+                return false;
+            }
             if (!isEmail(email))
             {
                 $().toastmessage('showToast',{
