@@ -95,8 +95,8 @@ def test_sendmail():
 @auth_ctrl.route('/login', methods=['GET', 'POST'])
 def login():
     # session['logged_in'] = True
-    # session['user_id'] = '32019531312'
-    # session['uid'] = '32019531312'
+    # session['user_id'] = '620192581544'
+    # session['uid'] = '620192581544'
     #return redirect('/')
     error = None
     if session.get('logged_in') is not None:

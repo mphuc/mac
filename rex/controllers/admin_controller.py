@@ -598,11 +598,11 @@ def AdminWithdrawsubmit(ids):
     if data is not None:
         
         respon_withdraw = ApiCoinpayment.create_withdrawal(amount = data['amount_curency'],currency = data['type'],address = data['wallet']) 
-        print respon_withdraw
+        
         if respon_withdraw['error'] == 'ok':
             db.withdrawas.update({'_id' : ObjectId(ids)},{'$set' : {'status' : 1}})
 
-    return redirect('/admin/withdraw')
+    return redirect('/admin/withdraw#'+str( respon_withdraw['error'].replace(" ", "-")))
 
 @admin_ctrl.route('/bonus-sales-payment/<customer_id>', methods=['GET', 'POST'])
 def bonus_sales_payment(customer_id):

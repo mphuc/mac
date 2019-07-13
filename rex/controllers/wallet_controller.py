@@ -128,7 +128,7 @@ def homewithdraw():
 
 				max_withdraw = float(user['investment'])*2.5
 				if int(user['status_verify']) != 2:
-					max_withdraw = 30
+					max_withdraw = 100
 				if is_number(quantity) == False  or quantity == '' or float(quantity) < 30:
 					val_amount_usd = 'empty'
 				else:
