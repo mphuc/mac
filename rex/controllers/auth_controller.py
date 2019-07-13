@@ -247,12 +247,12 @@ def signup(id_sponsor):
     json_url = os.path.join(SITE_ROOT, "../static", "country-list.json")
     data_country = json.load(open(json_url))
 
-    sponser_url = db.users.find_one({'customer_id': id_sponsor})
+    sponser_url = db.users.find_one({'username': id_sponsor})
     
     if sponser_url is None:
       username_sponsor = ''
     else:
-      username_sponsor = sponser_url['customer_id']
+      username_sponsor = sponser_url['username']
     value = {
       'val_sponsor' : val_sponsor,
       'val_country' : val_country,
