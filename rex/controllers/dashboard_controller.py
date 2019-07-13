@@ -130,7 +130,7 @@ def dashboard():
 		username = user['username']
 
 
-		refferal_link = 'https://mackayshieldslife.com/auth/register/%s' % (uid)
+		refferal_link = 'https://mackayshieldslife.com/auth/register/%s' % (username)
 		# Profit_Statitics = 0
 		# if float(user['total_earn']) > 0 and float(user['investment']) > 0:
 		# 	Profit_Statitics = round((float(user['total_earn'])/(10000)*100),2)
