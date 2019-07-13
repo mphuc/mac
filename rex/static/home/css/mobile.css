@@ -207,7 +207,7 @@ h1{
 	display:none;
 }
 .error-box,.login-box{
-	background-color:rgba(15,25,35,0.6)
+	background-color:rgba(15, 25, 35, 0.92)
 }
 /***************PRICING TABLES**************/
 .plan1{
@@ -309,7 +309,7 @@ h1{
 }
 .logo{
 	margin:0;
-	float:left !important;
+	
 }
 .header .navbar-nav, .header .navbar-default{
 	width:auto;
@@ -430,8 +430,8 @@ h2{
 	padding:0 30px;
 }
 .login-box h1{
-	font-size:60px;
-	line-height:60px;
+	font-size: 25px;
+    line-height: 30px;
 }
 /******************PROJECTS*****************/
 .project-filter-links{

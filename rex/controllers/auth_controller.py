@@ -191,7 +191,7 @@ def signup(id_sponsor):
       if sponsor == '':
         val_sponsor = 'empty'
       else:
-        check_sponser = db.User.find_one({'email': sponsor})
+        check_sponser = db.User.find_one({'customer_id': sponsor})
         if check_sponser is None:
             val_sponsor = 'not'
 
@@ -224,6 +224,7 @@ def signup(id_sponsor):
         response = urllib2.urlopen(api_url)
         response = response.read()
         response = json.loads(response)
+        
         if response['success']:
           val_recaptcha = ''
         else:
@@ -233,12 +234,12 @@ def signup(id_sponsor):
         val_terms = 'empty' 
 
       if val_sponsor == '' and val_country == '' and val_email == '' and val_password == '' and val_terms == '' and val_recaptcha == '':
-        check_user = db.users.find_one({ 'email': email })
-        if check_user is None:
-            create_user(check_sponser.customer_id,sponsor,country,email,password)
-            val_register = 'complete'
-        else:
-            val_checkemail = 'not'
+        # check_user = db.users.find_one({ 'email': email })
+        # if check_user is None:
+        create_user(check_sponser.customer_id,sponsor,country,email,password)
+        val_register = 'complete'
+        # else:
+        #     val_checkemail = 'not'
         #flash({'msg':'Account successfully created. Please check your email to activate your account', 'type':'success'})
         #return redirect('/auth/register/'+str(email)) 
 
@@ -246,12 +247,12 @@ def signup(id_sponsor):
     json_url = os.path.join(SITE_ROOT, "../static", "country-list.json")
     data_country = json.load(open(json_url))
 
-    sponser_url = db.users.find_one({'email': base64.b64decode(id_sponsor+'==')})
+    sponser_url = db.users.find_one({'customer_id': id_sponsor})
     
     if sponser_url is None:
       username_sponsor = ''
     else:
-      username_sponsor = sponser_url['email']
+      username_sponsor = sponser_url['customer_id']
     value = {
       'val_sponsor' : val_sponsor,
       'val_country' : val_country,
@@ -273,11 +274,11 @@ def signup(id_sponsor):
 
 def create_user(sponsor_id,sponsor,country,email,password):
   localtime = time.localtime(time.time())
-  customer_id = '%s%s%s%s%s%s'%(localtime.tm_mon,localtime.tm_year,localtime.tm_mday,localtime.tm_hour,localtime.tm_min,localtime.tm_sec)
+  customer_id = '%s%s%s%s%s%s'%(localtime.tm_sec,localtime.tm_mon,localtime.tm_hour,localtime.tm_year,localtime.tm_mday,localtime.tm_min)
   code_active = id_generator(40)
   datas = {
     'customer_id' : customer_id,
-    'username': email.replace(" ", "").lower(),
+    'username': customer_id,
     'password': set_password(password.replace(" ", "")),
     'email': email.replace(" ", "").lower(),
     'p_node': sponsor_id,
