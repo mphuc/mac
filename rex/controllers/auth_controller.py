@@ -120,7 +120,7 @@ def login():
             val_recaptcha = 'empty'
         if val_username == '' and val_password =='' and val_recaptcha == '':
             username = username.lower()
-            user = db.users.find_one({ '$or': [ { 'username': username }, { 'email': username } ]})
+            user = db.users.find_one({ 'username': username })
             
             if user is None or check_password(user['password'], password) == False:
                 val_login = 'not'      
@@ -589,7 +589,7 @@ def mail_reset_pass(email,username_user,link_active):
       
       <br> </td> </tr> <tr> <td width="25" style="border:white"> &nbsp; </td> 
       <td style="border:white"> <div style="color: #383535; font-size: 16px; font-family: Verdana; line-height: 22px;"><span class="im">
-      Dear """+str(email)+""",<br><br></span> 
+      Dear ID"""+str(username_user)+""",<br><br></span> 
       
       
        <p>Please click the link below to change password</p>  

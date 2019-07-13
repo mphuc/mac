@@ -1713,3 +1713,20 @@ video#bgvid {
 	border-radius: 5px;
 	padding: 5px;
 }
+.login_page .form-horizontal .form-control{
+	height: 48px;
+}
+.login_page .form-horizontal .login-field i{
+	line-height: 48px;
+}
+.login_page h1{
+
+    margin: 10px 0 20px;
+    font-size: 25px;
+    line-height: 55px;
+    font-weight: bold;
+
+}
+.login_page .login-btn{
+	padding: 12px 20px;
+}
