@@ -224,7 +224,7 @@ def signup(id_sponsor):
         response = urllib2.urlopen(api_url)
         response = response.read()
         response = json.loads(response)
-        
+
         if response['success']:
           val_recaptcha = ''
         else:
@@ -348,9 +348,9 @@ def create_user(sponsor_id,sponsor,country,email,password):
   }
   customer = db.users.insert(datas)
 
-  send_mail_register(email,password,country,sponsor,'https://mackayshieldslife.com/user/active/'+str(code_active))
+  send_mail_register(customer_id,email,password,country,sponsor,'https://mackayshieldslife.com/user/active/'+str(code_active))
   return True
-def send_mail_register(email,password,country,sponsor,link_active):
+def send_mail_register(id_login,email,password,country,sponsor,link_active):
     
     html = """
         <table  cellpadding="0" cellspacing="0" style=" font-family: Calibri;border: 1px solid #eee" width="600"><tbody ><tr style="padding:0 0 0 0"><td style="background-color: #2C3234; text-align: center;" colspan="2"> <br> <img width="300"  src="https://i.ibb.co/MMxpJM5/logo.png" class="CToWUd"><br> <br> </td> </tr> <tr> <td width="25" style="border:white"></td> <td style="border:white"> <br>
@@ -360,7 +360,9 @@ def send_mail_register(email,password,country,sponsor,link_active):
       Dear """+str(email)+""",<br><br></span> 
       <p>Thank you for enrolling!</p>
       <p>Your registration information: </p>
-      
+      <p style="text-align:left">
+        <strong>ID Login: """+str(id_login)+"""</strong>
+      </p>
       <p style="text-align:left">
         <strong>Email: """+str(email)+"""</strong>
       </p>

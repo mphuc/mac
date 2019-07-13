@@ -36,6 +36,7 @@
          {% if data.username_sponsor  == ''%}
             <h5 class="text-center" style="text-transform: inherit;margin-bottom: 70px;margin-top: 50px">Sponsor does not exist. Please try again.</h5>
          {% else %}
+         {% if data.val_register == '' %}
             <h1>Create Account</h1>
             <form class="form-horizontal" role="form" name="login" action="/auth/register/{{data.id_sponsor}}" method="POST">
                <div class="form-group">
@@ -99,6 +100,9 @@
                </div>
                <button type="submit" class="login-btn">Create Account</button>
             </form> 
+            {% else %}
+                <h5 class="text-center" style="text-transform: inherit;margin-bottom: 70px;margin-top: 50px">Sign up for a successful account. Please confirm your mail to activate your account.</h5>
+            {% endif %}
          {% endif %}
          
          <p style="margin-top: 20px;">© MacKayShieldsLife 2019.   All rights reserved.</p>
