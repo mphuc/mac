@@ -557,7 +557,7 @@ def change_password(codeactive):
                 password_new = set_password(password)
                 db.users.update({ "_id" : ObjectId(user['_id']) }, { '$set': { "code_active": code_active, 'password': password_new } })
                 val_complete = 'suceess'
-                return redirect('/auth/login')   
+                flash({'msg': 'Password changed', 'type':'success'})
     if val_complete != 'suceess':
       user = db.users.find_one({ 'code_active': codeactive })
       if user is None:
