@@ -250,7 +250,8 @@ def create_invoid():
                             'wallet' : new_wallet,
                             'confirmations' : 0,
                             'currency' : request.form['currency'],
-                            'status': 0
+                            'status': 0,
+                            'date_added' : datetime.utcnow()
                         }
                         db.invoices.insert(data_invoice)
 
@@ -355,7 +356,7 @@ def callback_invoid(invoid_id):
 
         invoid = db.invoices.find_one({'$and' :[{'invoid_id': invoid_id},{'status' : 0}]} )
         if invoid is not None:
-            
+
             db.invoices.update({ "invoid_id" : invoid_id }, { '$set': { 
                 "amount_receve" : amount, 
                 "confirmations" : 2,

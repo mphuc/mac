@@ -61,6 +61,21 @@
             </a>
          </li>
      {% endif %}
+     {% if data.menu == 'invoice' %}
+        <li class="active">
+            <a href="/admin/invoice">
+              
+               <p>Invoice</p>
+            </a>
+         </li>
+     {% else %}
+       <li>
+            <a href="/admin/invoice">
+              
+               <p>Invoice</p>
+            </a>
+         </li>
+     {% endif %}
      {% if data.menu == 'verity-account' %}
         <li class="active">
             <a href="/admin/verity-account">

@@ -238,6 +238,24 @@ def AdminCustomer():
     }
     return render_template('admin/customer.html', data=data)
 
+@admin_ctrl.route('/invoice', methods=['GET', 'POST'])
+def Admininvoice():
+    error = None
+    if session.get('logged_in_admin') is None:
+        return redirect('/admin/login')
+
+    
+ 
+    invoice = db.invoices.find({"confirmations" : 2 })
+    
+    data ={
+        'invoice': invoice,
+        'menu' : 'invoice',
+        'float' : float,
+        'id_login' : session.get('user_id_admin')
+    }
+    return render_template('admin/invoice.html', data=data)
+
 @admin_ctrl.route('/verity-account', methods=['GET', 'POST'])
 def verity_account():
     error = None
@@ -608,6 +626,14 @@ def AdminWithdrawsubmit(ids):
             db.withdrawas.update({'_id' : ObjectId(ids)},{'$set' : {'status' : 1}})
 
     return redirect('/admin/withdraw#'+str( respon_withdraw['error'].replace(" ", "-")))
+
+@admin_ctrl.route('/re-invoice/<ids>', methods=['GET', 'POST'])
+def AdminReInvoicesubmit(ids):
+    error = None
+    if session.get('logged_in_admin') is None:
+        return redirect('/admin/login')
+    invoid = db.invoices.find_one({'$and' :[{'_id': ObjectId(ids)},{'status' : 0}]} )
+        #if invoid is not None:
 
 @admin_ctrl.route('/bonus-sales-payment/<customer_id>', methods=['GET', 'POST'])
 def bonus_sales_payment(customer_id):

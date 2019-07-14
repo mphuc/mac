@@ -22,7 +22,8 @@ class Invoice(Document):
         'currency' : unicode,
         'status': int,
         'amount_usd' : float,
-        'amount_receve' : float
+        'amount_receve' : float,
+        'date_added' : datetime.datetime,
     }
     default_values = {
         'confirmations' : 0
