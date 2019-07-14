@@ -158,7 +158,7 @@ def system_member(_id):
         'list_member':list_member,
         'count_f1' : db.User.find({'$and' : [{'p_node': uid},{ 'investment': { '$gt': 0 } }]}).count(),
         'user' : user,
-        'email' : db.User.find_one({'_id': ObjectId(_id)})['email'],
+        'email' : db.User.find_one({'_id': ObjectId(_id)})['username'],
         'number_notifications' : number_notifications
     }
     return render_template('account/system.html', data=data)
