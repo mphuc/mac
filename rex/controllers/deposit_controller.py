@@ -156,7 +156,7 @@ def deposit():
                             data_investment = {
                                 'uid' : uid,
                                 'user_id': user['_id'],
-                                'username' : user['email'],
+                                'username' : user['username'],
                                 'package': float(package),
                                 'status' : 1,
                                 'date_added' : datetime.utcnow(),
@@ -174,7 +174,7 @@ def deposit():
                             #hoa hong truc tiep
                             FnRefferalProgram(uid, float(package))
                             
-                            send_mail_active_package(user['email'],float(package))
+                            send_mail_active_package(user['email'],user['username'],float(package))
                             val_investment = 'success'
                 else:
                     val_package = 'empty'
@@ -240,7 +240,7 @@ def create_invoid():
                         data_invoice = {
                             'uid' : uid,
                             'user_id': user['_id'],
-                            'username' : user['email'],
+                            'username' : user['username'],
                             'amount' : amount_currency,
                             'amount_usd' : round(float(amount_usd),2),
                             'invoid_id' : invoid_id,
@@ -297,7 +297,7 @@ def return_balance():
 
         SaveHistory(uid, 
             customers['_id'], 
-            customers['email'], 
+            customers['username'], 
             float(investment['package']), 
             'Return Balance Investment', 
             'USD', 'Return Balance Investment', '', '')
@@ -321,7 +321,7 @@ def re_investment():
         data_investment = {
             'uid' : uid,
             'user_id': user['_id'],
-            'username' : user['email'],
+            'username' : user['username'],
             'package': float(investment['package']),
             'status' : 1,
             'date_added' : datetime.utcnow(),
@@ -339,7 +339,7 @@ def re_investment():
         db.investments.insert(data_investment)
 
         flash({'msg':'Re-Investment Success', 'type':'success'})
-        send_mail_active_package(user['email'],float(investment['package']))
+        send_mail_active_package(user['email'],user['username'],float(investment['package']))
     return redirect('/account/investment')    
 @deposit_ctrl.route('/jskfkjsfhkjsdhfqwtryqweqeweqeqwe/<invoid_id>', methods=['GET', 'POST'])
 def callback_invoid(invoid_id):
@@ -434,7 +434,7 @@ def callback_invoid(invoid_id):
                     data_investment = {
                         'uid' : uid,
                         'user_id': user['_id'],
-                        'username' : user['email'],
+                        'username' : user['username'],
                         'package': float(package),
                         'status' : 1,
                         'date_added' : datetime.utcnow(),
@@ -455,7 +455,7 @@ def callback_invoid(invoid_id):
                     #hoa hong truc tiep
                     FnRefferalProgram(uid, float(package))
                     
-                    send_mail_active_package(user['email'],float(package))
+                    send_mail_active_package(user['email'],user['username'],float(package))
             
                 else:
                     db.invoices.update({ "invoid_id" : invoid_id }, { '$set': { 
@@ -553,7 +553,7 @@ def activeinvestmentwierywieurwieryiwue():
                 data_investment = {
                     'uid' : uid,
                     'user_id': user['_id'],
-                    'username' : user['email'],
+                    'username' : user['username'],
                     'package': float(package),
                     'status' : 1,
                     'date_added' : datetime.utcnow(),
@@ -574,7 +574,7 @@ def activeinvestmentwierywieurwieryiwue():
                 #hoa hong truc tiep
                 FnRefferalProgram(uid, float(package))
                 
-                send_mail_active_package(user['email'],float(package))
+                send_mail_active_package(user['email'],user['username'],float(package))
         
            
     return redirect('/admin/customer-detail/'+str(user['_id']))
@@ -781,7 +781,7 @@ def binary_right(customer_id):
 
 def FnRefferalProgram(user_id, amount_invest):
     customers = db.users.find_one({"customer_id" : user_id })
-    username_invest = customers['email']
+    username_invest = customers['username']
     i = 0
     while i < 10:
         
@@ -930,13 +930,13 @@ def send_mail_test(form):
         "subject": "callback",
         "html": html})
 
-def send_mail_active_package(email,package):
+def send_mail_active_package(email,username,package):
     html = """
         <table  cellpadding="0" cellspacing="0" style=" font-family: Calibri;border: 1px solid #eee" width="600"><tbody ><tr style="padding:0 0 0 0"><td style="background-color: #2C3234; text-align: center;" colspan="2"> <br> <img width="300"  src="https://i.ibb.co/MMxpJM5/logo.png" class="CToWUd"><br> <br> </td> </tr> <tr> <td width="25" style="border:white"></td> <td style="border:white"> <br>
       
       <br> </td> </tr> <tr> <td width="25" style="border:white"> &nbsp; </td> 
       <td style="border:white"> <div style="color: #383535; font-size: 16px; font-family: Verdana; line-height: 22px;"><span class="im">
-      Dear """+str(email)+""",<br><br></span> 
+      Dear """+str(username)+""",<br><br></span> 
       
       <p style="text-align:left">
         <strong>Package Active: $"""+str(package)+"""</trong>

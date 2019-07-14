@@ -80,6 +80,7 @@ def children_tree (json,array,floor):
         tree = {
             "customer_id":str(x['customer_id']),
             "email":(str(x['email'])),
+            "username":(str(x['username'])),
             "fl":"F"+str(floor),
             "country" : x['country'],
             "investment" : x['investment'],
@@ -91,12 +92,13 @@ def children_tree (json,array,floor):
         sponsor = db.User.find_one({'customer_id': x['p_node']})
         sponsor_name = ''
         if sponsor:
-            sponsor_name = sponsor['email']
+            sponsor_name = sponsor['username']
         
         children = {
             "customer_id":str(x['customer_id']),
             "creation":x['creation'],
             "email":(str(x['email'])),
+            "username":(str(x['username'])),
             "level" : str(x['level']),
             "count_f1" : str(count_f1),
             "floor":"F"+str(floor),
@@ -130,7 +132,7 @@ def system():
         'list_member':list_member,
         'count_f1' : db.User.find({'$and' : [{'p_node': uid},{ 'investment': { '$gt': 0 } }]}).count(),
         'user' : user,
-        'email' : user['email'],
+        'email' : user['username'],
         'number_notifications' : number_notifications
     }
     return render_template('account/system.html', data=data)
