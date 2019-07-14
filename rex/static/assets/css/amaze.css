@@ -1029,6 +1029,11 @@ div.dataTables_scrollFoot table {
   border-top: none; }
 
 @media screen and (max-width: 767px) {
+
+  #refferal_link {
+    font-size: 11px !important;
+  }
+
   div.dataTables_wrapper div.dataTables_length,
   div.dataTables_wrapper div.dataTables_filter,
   div.dataTables_wrapper div.dataTables_info,
