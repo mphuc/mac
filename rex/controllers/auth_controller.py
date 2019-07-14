@@ -181,8 +181,8 @@ def signup(id_sponsor):
       
       sponsor = request.form['sponsor']
       country = request.form['country']
-      email = request.form['email']
-      username = request.form['username']
+      email = request.form['email'].replace(" ", "").lower()
+      username = request.form['username'].replace(" ", "").lower()
       password = request.form['password']
       #terms = 
       recaptcha = request.form['g-recaptcha-response']
