@@ -945,14 +945,31 @@ def send_mail_active_package(email,username,package):
       <br> <br> Best regards,<br> Mackayshields<br><br> </b> </span></div> </td> </tr>  </tbody></table>
    
       """
-    return requests.post(
-      "https://api.mailgun.net/v3/mackayshieldslife.com/messages",
-      auth=("api", "key-cade8d5a3d4f7fcc9a15562aaec55034"),
-      data={"from": "Mackayshieldslife <info@mackayshieldslife.com>",
-        "to": [ email],
-        "subject": "Successful package activation",
-        "html": html})
+    # return requests.post(
+    #   "https://api.mailgun.net/v3/mackayshieldslife.com/messages",
+    #   auth=("api", "key-cade8d5a3d4f7fcc9a15562aaec55034"),
+    #   data={"from": "Mackayshieldslife <info@mackayshieldslife.com>",
+    #     "to": [ email],
+    #     "subject": "Successful package activation",
+    #     "html": html})
+    username = 'info@mackayshieldslife.com'
+    password = Config().passmail
+    msg = MIMEMultipart('mixed')
+    sender = 'info@mackayshieldslife.com'
+    recipient = email
+    msg['Subject'] = 'Successful package activation'
+    msg['From'] = sender
+    msg['To'] = recipient
     
+    html_message = MIMEText(html, 'html')
+    msg.attach(html_message)
+    mailServer = smtplib.SMTP('smtp.mailgun.org', 587) 
+    
+    mailServer.starttls()
+    #mailServer.ehlo()
+    mailServer.login(username, password)
+    mailServer.sendmail(sender, recipient, msg.as_string())
+    mailServer.close()
     
 
 
