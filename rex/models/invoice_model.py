@@ -21,7 +21,8 @@ class Invoice(Document):
         'confirmations' : int,
         'currency' : unicode,
         'status': int,
-        'amount_usd' : float
+        'amount_usd' : float,
+        'amount_receve' : float
     }
     default_values = {
         'confirmations' : 0

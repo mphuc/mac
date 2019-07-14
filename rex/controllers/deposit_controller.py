@@ -242,6 +242,7 @@ def create_invoid():
                             'user_id': user['_id'],
                             'username' : user['username'],
                             'amount' : amount_currency,
+                            'amount_receve' : 0,
                             'amount_usd' : round(float(amount_usd),2),
                             'invoid_id' : invoid_id,
                             'txt' : '',
@@ -354,6 +355,12 @@ def callback_invoid(invoid_id):
 
         invoid = db.invoices.find_one({'$and' :[{'invoid_id': invoid_id},{'status' : 0}]} )
         if invoid is not None:
+            
+            db.invoices.update({ "invoid_id" : invoid_id }, { '$set': { 
+                "amount_receve" : amount, 
+                "confirmations" : 2,
+                "txt" : txn_id
+            } })
             if float(amount) >= float(invoid['amount']):
                 db.invoices.update({ "invoid_id" : invoid_id }, { '$set': { 
                     "status" : 1, 
