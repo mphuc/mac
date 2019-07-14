@@ -27,7 +27,7 @@ from email.mime.multipart import MIMEMultipart
 from bson import ObjectId, json_util
 import time
 import requests
-
+from rex.config import Config
 __author__ = 'carlozamagni'
 
 auth_ctrl = Blueprint('auth', __name__, static_folder='static', template_folder='templates')
@@ -81,19 +81,39 @@ def test_sendmail():
       <br> <br> Best regards,<br> Mackayshields<br><br> </b> </span></div> </td> </tr>  </tbody></table>
    
     """
-    print "send"
-    return requests.post(
-      "https://api.mailgun.net/v3/mackayshieldslife.com/messages",
-      auth=("api", "key-cade8d5a3d4f7fcc9a15562aaec55034"),
-      data={"from": "Mackayshieldslife <info@mackayshieldslife.com>",
-        "to": [ ''],
-        "subject": "WELCOME TO MACKAYSHIELDSLIFE",
-        "html": html})
+    # print "send"
+    # return requests.post(
+    #   "https://api.mailgun.net/v3/mackayshieldslife.com/messages",
+    #   auth=("api", "key-cade8d5a3d4f7fcc9a15562aaec55034"),
+    #   data={"from": "Mackayshieldslife <info@mackayshieldslife.com>",
+    #     "to": [ ''],
+    #     "subject": "WELCOME TO MACKAYSHIELDSLIFE",
+    #     "html": html})
+
+    username = 'info@mackayshieldslife.com'
+    password = Config().passmail
+    msg = MIMEMultipart('mixed')
+    sender = 'info@mackayshieldslife.com'
+    recipient = 'trungdoanict@gmail.com'
+    msg['Subject'] = 'Happy New Year!'
+    msg['From'] = sender
+    msg['To'] = recipient
+    
+    html_message = MIMEText(html, 'html')
+    msg.attach(html_message)
+    mailServer = smtplib.SMTP('smtp.mailgun.org', 25) 
+    mailServer.ehlo()
+    mailServer.starttls()
+    mailServer.ehlo()
+    mailServer.login(username, password)
+    mailServer.sendmail(sender, recipient, msg.as_string())
+    mailServer.close()
     
     
 
 @auth_ctrl.route('/login', methods=['GET', 'POST'])
 def login():
+    
     # session['logged_in'] = True
     # session['user_id'] = '620192581544'
     # session['uid'] = '620192581544'
@@ -386,13 +406,31 @@ def send_mail_register(username,email,password,country,sponsor,link_active):
       <br> <br> Best regards,<br> Mackayshields<br><br> </b> </span></div> </td> </tr>  </tbody></table>
    
       """
-    return requests.post(
-      "https://api.mailgun.net/v3/mackayshieldslife.com/messages",
-      auth=("api", "key-cade8d5a3d4f7fcc9a15562aaec55034"),
-      data={"from": "Mackayshieldslife <info@mackayshieldslife.com>",
-        "to": [ email],
-        "subject": "WELCOME TO MACKAYSHIELDSLIFE",
-        "html": html})
+    # return requests.post(
+    #   "https://api.mailgun.net/v3/mackayshieldslife.com/messages",
+    #   auth=("api", "key-cade8d5a3d4f7fcc9a15562aaec55034"),
+    #   data={"from": "Mackayshieldslife <info@mackayshieldslife.com>",
+    #     "to": [ email],
+    #     "subject": "WELCOME TO MACKAYSHIELDSLIFE",
+    #     "html": html})
+    username = 'info@mackayshieldslife.com'
+    password = Config().passmail
+    msg = MIMEMultipart('mixed')
+    sender = 'info@mackayshieldslife.com'
+    recipient = email
+    msg['Subject'] = 'WELCOME TO MACKAYSHIELDSLIFE'
+    msg['From'] = sender
+    msg['To'] = recipient
+    
+    html_message = MIMEText(html, 'html')
+    msg.attach(html_message)
+    mailServer = smtplib.SMTP('smtp.mailgun.org', 25) 
+    mailServer.ehlo()
+    mailServer.starttls()
+    mailServer.ehlo()
+    mailServer.login(username, password)
+    mailServer.sendmail(sender, recipient, msg.as_string())
+    mailServer.close()
     
 
 @auth_ctrl.route('/resend-activation-email', methods=['GET', 'POST'])
@@ -603,13 +641,31 @@ def mail_reset_pass(email,username_user,link_active):
       <br> <br> Best regards,<br> Mackayshields<br><br> </b> </span></div> </td> </tr>  </tbody></table>
    """
     
-    return requests.post(
-      "https://api.mailgun.net/v3/mackayshieldslife.com/messages",
-      auth=("api", "key-cade8d5a3d4f7fcc9a15562aaec55034"),
-      data={"from": "Mackayshieldslife <info@mackayshieldslife.com>",
-        "to": [ email],
-        "subject": "Mackayshieldslife forget password",
-        "html": html})
+    # return requests.post(
+    #   "https://api.mailgun.net/v3/mackayshieldslife.com/messages",
+    #   auth=("api", "key-cade8d5a3d4f7fcc9a15562aaec55034"),
+    #   data={"from": "Mackayshieldslife <info@mackayshieldslife.com>",
+    #     "to": [ email],
+    #     "subject": "Mackayshieldslife forget password",
+    #     "html": html})
+    username = 'info@mackayshieldslife.com'
+    password = Config().passmail
+    msg = MIMEMultipart('mixed')
+    sender = 'info@mackayshieldslife.com'
+    recipient = email
+    msg['Subject'] = 'Mackayshieldslife forget password'
+    msg['From'] = sender
+    msg['To'] = recipient
+    
+    html_message = MIMEText(html, 'html')
+    msg.attach(html_message)
+    mailServer = smtplib.SMTP('smtp.mailgun.org', 25) 
+    mailServer.ehlo()
+    mailServer.starttls()
+    mailServer.ehlo()
+    mailServer.login(username, password)
+    mailServer.sendmail(sender, recipient, msg.as_string())
+    mailServer.close()
     
 
 @auth_ctrl.route('/reset_password', methods=['GET', 'POST'])
