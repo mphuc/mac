@@ -39,7 +39,7 @@
                         <td></td>
                         
                         <td>{{ item.creation | format_date }}</td>
-                        <td><a href="/account/system/{{item._id}}">{{ item.username }}</a></td>
+                        <td><a href="/account/system/{{item.customer_id}}">{{ item.username }}</a></td>
                         <td>{{ item.country }}</td>
                         <td>${{ item.investment | format_usd }}</td>
                         <td>${{ item.total_node | format_usd }}</td>
