@@ -27,7 +27,7 @@
                         <th>Date Add</th>
                         
                         <!-- <th>customer_id</th> -->
-                        <th>Email</th>
+                        <th>Username</th>
                         <th>Balance</th>
                         <th>Investment</th>
                         
@@ -44,7 +44,7 @@
                         <td></td>
                         <td>{{ item.creation | format_date }}</td>
                         
-                        <td><a href="/admin/customer-detail/{{ item._id}}">{{ item.email}}</a></td>
+                        <td><a href="/admin/customer-detail/{{ item._id}}">{{ item.username}}</a></td>
                         <td>{{ item.balance_wallet | format_usd }}</td>
                         <td>{{ item.investment | format_usd }}</td>
                         

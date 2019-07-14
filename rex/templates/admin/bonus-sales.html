@@ -18,7 +18,7 @@
                         <table  class="table table-bordered" style="width:100%;cellspacing:0">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Username</th>
                                     <th class="text-center">Volume</th>
                                     <th class="text-center">Reward</th>
                                     <th class="text-center">Payment</th>
@@ -28,7 +28,7 @@
                                 {% for item in data.user_payment %}
                                 <tr>
                                    
-                                    <td class="text-center"><a href="/admin/customer-detail/{{ item._id}}">{{ item.email}}</a></td>
+                                    <td class="text-center"><a href="/admin/customer-detail/{{ item._id}}">{{ item.username}}</a></td>
                                     <td class="text-center">{{ item.total_node | number_format}}</td>
                                     <td class="text-center">
                                         {% if item.total_node >= 100000 and item.total_node < 250000 %}
