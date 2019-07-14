@@ -42,7 +42,7 @@
               <div class="form-group">
                   <label>Username <span class="text-danger">*</span></label>
                   <div class="login-field pull-left">
-                     <i class="fa fa-envelope-o pull-left"></i>
+                     <i class="fa fa-user pull-left"></i>
                      <input autocomplete="off" type="text" class="form-control pull-left" name="username"  id="" placeholder="Your  username"  value="{% if data.form and data.val_register == ''%}{{data.form['username']}}{% endif %}">
                      
                   </div>
@@ -87,7 +87,7 @@
                <div class="form-group">
                   <label>Sponsor <span class="text-danger">*</span></label> 
                   <div class="login-field pull-left">
-                     <i class="fa fa-user pull-left"></i>
+                     <i class="fa fa-users pull-left"></i>
                      <input autofocus placeholder="Sponsor" type="text" name="sponsor" class="form-control input-no-border au-input" required="required" aria-required="true" readonly="true" value="{% if data.form%}{{data.form['sponsor']}}{%else%}{{data.username_sponsor}}{% endif %}"> 
                   </div>
                </div>
