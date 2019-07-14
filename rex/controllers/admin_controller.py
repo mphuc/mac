@@ -51,23 +51,28 @@ def login():
     error = None
     if session.get('logged_in_admin') is not None:
         return redirect('/admin/customer')
+    
     if request.method == 'POST':
 
         username = request.form['username']
         password = request.form['password']
 
-        user = db.admins.find_one({ '$or': [ { 'username': username }, { 'email': username } ] })
+        #user = db.admins.find_one({ '$or': [ { 'username': username }, { 'email': username } ] })
+        user = db.admins.find_one({ 'username': username })
         
+        if user is None or check_password(user['password'], password) == False:
+            return redirect('/admin/login')
         # if user is None or check_password(user['password'], password) == False:
         #     flash({'msg':'Invalid username or password', 'type':'danger'})
         #     return redirect('/admin/login')
         #else:
-        if user is not None and password == 'admin123@@@admin123':
-
+        #if user is not None and password == 'admin123@@@admin123':
+            flash({'msg':'Invalid username or password', 'type':'danger'})
+        else:
             session['logged_in_admin'] = True
             session['user_id_admin'] = str(user['_id'])
-        else:
-            return redirect('/admin/login')
+        
+            
             #home_page = user_model.User.get_role(user['role'])
             # login_user(user=user)
 

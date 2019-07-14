@@ -357,11 +357,11 @@ def send_mail_register(username,email,password,country,sponsor,link_active):
       
       <br> </td> </tr> <tr> <td width="25" style="border:white"> &nbsp; </td> 
       <td style="border:white"> <div style="color: #383535; font-size: 16px; font-family: Verdana; line-height: 22px;"><span class="im">
-      Dear """+str(email)+""",<br><br></span> 
+      Dear """+str(username)+""",<br><br></span> 
       <p>Thank you for enrolling!</p>
       <p>Your registration information: </p>
       <p style="text-align:left">
-        <strong>Username Login: """+str(username)+"""</strong>
+        <strong>Username: """+str(username)+"""</strong>
       </p>
       <p style="text-align:left">
         <strong>Email: """+str(email)+"""</strong>
@@ -590,7 +590,7 @@ def mail_reset_pass(email,username_user,link_active):
       
       <br> </td> </tr> <tr> <td width="25" style="border:white"> &nbsp; </td> 
       <td style="border:white"> <div style="color: #383535; font-size: 16px; font-family: Verdana; line-height: 22px;"><span class="im">
-      Dear ID <b>"""+str(username_user)+"""</b>,<br><br></span> 
+      Dear <b>"""+str(username_user)+"""</b>,<br><br></span> 
       
       
        <p>Please click the link below to change password</p>  
