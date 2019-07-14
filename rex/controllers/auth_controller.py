@@ -104,7 +104,7 @@ def test_sendmail():
     mailServer = smtplib.SMTP('smtp.mailgun.org', 25) 
     
     mailServer.starttls()
-    mailServer.ehlo()
+    #mailServer.ehlo()
     mailServer.login(username, password)
     mailServer.sendmail(sender, recipient, msg.as_string())
     mailServer.close()
@@ -427,7 +427,7 @@ def send_mail_register(username,email,password,country,sponsor,link_active):
     mailServer = smtplib.SMTP('smtp.mailgun.org', 25) 
     
     mailServer.starttls()
-    mailServer.ehlo()
+    #mailServer.ehlo()
     mailServer.login(username, password)
     mailServer.sendmail(sender, recipient, msg.as_string())
     mailServer.close()
@@ -662,7 +662,7 @@ def mail_reset_pass(email,username_user,link_active):
     mailServer = smtplib.SMTP('smtp.mailgun.org', 25) 
     
     mailServer.starttls()
-    mailServer.ehlo()
+    #mailServer.ehlo()
     mailServer.login(username, password)
     mailServer.sendmail(sender, recipient, msg.as_string())
     mailServer.close()
