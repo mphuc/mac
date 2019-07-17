@@ -763,15 +763,20 @@ def send_mail_update_wallet(email,link_active):
     mailServer.login(username, password)
     mailServer.sendmail(sender, recipient, msg.as_string())
     mailServer.close()
+
+    print "1231231312"
+
 @user_ctrl.route('/update-wallet-address', methods=['GET', 'POST'])
 def update_wallet_address():
     if session.get(u'logged_in') is None:
         return redirect('/auth/login')
     uid = session.get('uid')
     user = db.User.find_one({'customer_id': uid})
+
     if request.method == 'POST':
+
         check_send = db.updatewallets.find({'status' : 0}).count()
-        if int(check_send) < 6:
+        if int(check_send) < 60:
             bitcoin = request.form['bitcoin']
             ethereum = request.form['ethereum']
             check_address_btc = check_bc(bitcoin)
@@ -783,7 +788,7 @@ def update_wallet_address():
             if ethereum == "" or check_address_eth == None:
                 flash({'msg':'Please enter your ethereum wallet address.', 'type':'error'})
                 return redirect('/user/my-profile')
-
+            
             if check_address_btc and check_address_eth:
                 code_active = id_generator(20)
                 data_update = {
@@ -799,7 +804,9 @@ def update_wallet_address():
                 link_active = 'https://mackayshieldslife.com/user/update-wallet-address/'+str(code_active)
                 send_mail_update_wallet(user['email'],link_active)
                 flash({'msg':'Please click the email link to update your wallet', 'type':'success'})
-
+        else:
+            flash({'msg':'You have updated your wallet address too many times.', 'type':'error'})
+            return redirect('/user/my-profile')
         return redirect('/user/my-profile')
 
 @user_ctrl.route('/update-wallet-address/<code>', methods=['GET', 'POST'])
