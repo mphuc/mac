@@ -185,7 +185,7 @@ def create_news():
 
 @admin1_ctrl.route('/upload_image', methods=['GET', 'POST'])
 def upload_image():
-    if session.get(u'logged_in') is None:
+    if session.get('logged_in') is None:
         return redirect('/auth/login')
     
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
