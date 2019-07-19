@@ -204,7 +204,11 @@ def format_int(value): # date = datetime object.
 @app.template_filter()
 def format_date(date): # date = datetime object.
     return date.strftime('%Y-%m-%d %H:%M:%S') 
-    return date.strftime('%Y/%m/%d %H:%M:%S')
+    #return date.strftime('%Y/%m/%d %H:%M:%S')
+
+@app.template_filter()
+def format_datess(date): # date = datetime object.
+    return date.strftime('%B, %d, %Y') 
 
 @app.template_filter()
 def format_date_profit(date): # date = datetime object.
@@ -436,59 +440,91 @@ def home_page():
     }
     return render_template('home/index.html', data=data)
 
-@app.route('/howitworks.aspx')
-def howitworks():
-    data ={
-    'menu' : 'home'
-    }
-    return render_template('home/howitworks.html', data=data)
+@app.route('/news/<starts>/<limits>')
+def news_page(starts,limits):
+    
+    query = db.news.find({}).sort([("date_added", -1)]).limit(int(limits)).skip(int(starts))
 
-@app.route('/about.aspx')
-def about():
+    count_new = db.news.find({}).count()
+    show_next = False
+    show_previous = False
+    if int(count_new) > int(starts) + 10:
+        show_next = True
+    if int(starts) > 0:
+        show_previous = True
     data ={
-    'menu' : 'home'
+    'menu' : 'news',
+    'history' : query,
+    'statr' : starts,
+    'limit' : limits,
+    'statr_previous' : int(starts)-10,
+    'statr_next' : int(starts)+10,
+    'show_previous' : show_previous,
+    'show_next' : show_next
     }
-    return render_template('home/about.html', data=data)
+    return render_template('home/news.html', data=data)
 
-@app.route('/srilanka.aspx')
-def srilanka():
+@app.route('/news/<ids>')
+def news_items_page(ids):
+    query = db.news.find_one({'_id' : ObjectId(ids)})
     data ={
-    'menu' : 'home'
+    'menu' : 'news',
+    'history' : query
     }
-    return render_template('home/srilanka.html', data=data)
-@app.route('/singapore.aspx')
-def singapore():
-    data ={
-    'menu' : 'home'
-    }
-    return render_template('home/singapore.html', data=data)
-@app.route('/dubai.aspx')
-def dubai():
-    data ={
-    'menu' : 'home'
-    }
-    return render_template('home/dubai.html', data=data)
-@app.route('/other.aspx')
-def other():
-    data ={
-    'menu' : 'home'
-    }
-    return render_template('home/other.html', data=data)
-@app.route('/investment.aspx')
-def investment():
-    data ={
-    'menu' : 'home'
-    }
-    return render_template('home/investment.html', data=data)
-@app.route('/blog.aspx')
-def blog():
-    data ={
-    'menu' : 'home'
-    }
-    return render_template('home/blog.html', data=data)
-@app.route('/contact.aspx')
-def contact():
-    data ={
-    'menu' : 'home'
-    }
-    return render_template('home/contact.html', data=data)
+    return render_template('home/news-item.html', data=data)
+# @app.route('/howitworks.aspx')
+# def howitworks():
+#     data ={
+#     'menu' : 'home'
+#     }
+#     return render_template('home/howitworks.html', data=data)
+
+# @app.route('/about.aspx')
+# def about():
+#     data ={
+#     'menu' : 'home'
+#     }
+#     return render_template('home/about.html', data=data)
+
+# @app.route('/srilanka.aspx')
+# def srilanka():
+#     data ={
+#     'menu' : 'home'
+#     }
+#     return render_template('home/srilanka.html', data=data)
+# @app.route('/singapore.aspx')
+# def singapore():
+#     data ={
+#     'menu' : 'home'
+#     }
+#     return render_template('home/singapore.html', data=data)
+# @app.route('/dubai.aspx')
+# def dubai():
+#     data ={
+#     'menu' : 'home'
+#     }
+#     return render_template('home/dubai.html', data=data)
+# @app.route('/other.aspx')
+# def other():
+#     data ={
+#     'menu' : 'home'
+#     }
+#     return render_template('home/other.html', data=data)
+# @app.route('/investment.aspx')
+# def investment():
+#     data ={
+#     'menu' : 'home'
+#     }
+#     return render_template('home/investment.html', data=data)
+# @app.route('/blog.aspx')
+# def blog():
+#     data ={
+#     'menu' : 'home'
+#     }
+#     return render_template('home/blog.html', data=data)
+# @app.route('/contact.aspx')
+# def contact():
+#     data ={
+#     'menu' : 'home'
+#     }
+#     return render_template('home/contact.html', data=data)

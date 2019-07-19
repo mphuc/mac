@@ -1,0 +1,58 @@
+{% extends "layout_news.html" %}
+{% block title %}News {% endblock %}
+
+{% block main %}
+<div class="paddingBox  col-md-12 " id="News">  
+    <div class="container">
+      <div class="row text-center">
+        <h2>latest news</h2>
+        
+
+
+
+        <div class="spacer"></div>
+        <div id="" class="new-slider">
+          	{% for item in data.history %}
+          	
+
+
+            <aside class="help-business col-lg-6">
+            	<a href="/news/{{ item._id }}">
+					<div class="news-img text-right col-lg-3 col-md-3 col-sm-12 col-xs-12">
+					<figure><img style="" src="{{ item.thumb }}" alt="" /></figure>
+					<!--news-img--> 
+					</div>
+					<div class="text-left col-lg-9 col-md-9 col-sm-12 col-xs-12 news-info">
+					<div class="date">{{ item.date_added | format_datess }}</div>
+					<h5 class="black-color">{{ item.title }}</h5>
+
+					    <!-- {% autoescape on %}{{item.content}}{% endautoescape %} -->
+
+
+					</div>
+				</a>
+            </aside>
+            
+          	{% endfor %}
+          
+          
+          <!--new-slider--> 
+        <div class="col-md-6" style="margin-top: 30px">
+        	
+        	{% if data.show_previous == True %}
+          	<a href="/news/{{data.statr_previous}}/{{data.limit}}" style=" color: #51c5eb" class="pull-right">Previous</a>
+          	{% endif %}
+        </div>
+        <div class="col-md-6"  style="margin-top: 30px">
+        	{% if data.show_next == True %}
+          	<a href="/news/{{data.statr_next}}/{{data.limit}}" style=" color: #51c5eb" class="pull-left">Next</a>
+          	{% endif %}
+          </div>
+        </div>
+        <!--row--> 
+      </div>
+      <!--container--> 
+    </div>
+    <!--paddingBox--> 
+  </div>
+{% endblock %}

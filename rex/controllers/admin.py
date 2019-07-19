@@ -23,8 +23,8 @@ import requests
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
-
-
+import string
+import random
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
 version = 2 # API version
@@ -38,7 +38,8 @@ def check_password(pw_hash, password):
 
 def set_password(password):
     return generate_password_hash(password)
-
+def id_generator(size=6, chars=string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
 @admin1_ctrl.route('/profit', methods=['GET', 'POST'])
 def ProfitDaiyly():
     error = None
@@ -151,10 +152,124 @@ def notifications():
     
 
     data ={
-        'menu' : 'profit-daily',
+        'menu' : 'notifications',
         'history': query
     }
     return render_template('admin/notifications.html', data=data)
+
+@admin1_ctrl.route('/news', methods=['GET', 'POST'])
+def news():
+    error = None
+    if session.get('logged_in_admin') is None:
+        return redirect('/admin/login')
+    query = db.news.find({})
+    
+
+    data ={
+        'menu' : 'news',
+        'history': query
+    }
+    return render_template('admin/news.html', data=data)
+
+@admin1_ctrl.route('/create-news', methods=['GET', 'POST'])
+def create_news():
+    error = None
+    if session.get('logged_in_admin') is None:
+        return redirect('/admin/login')
+    
+    data ={
+        'menu' : 'news'
+    }
+    return render_template('admin/create-news.html', data=data)
+
+
+@admin1_ctrl.route('/upload_image', methods=['GET', 'POST'])
+def upload_image():
+    if session.get(u'logged_in') is None:
+        return redirect('/auth/login')
+    
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    
+    upload     = request.files.get('file')
+    
+    save_path = SITE_ROOT+'/../static/img/upload'.format(category='category')
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+
+
+    name = id_generator(25)+upload.filename
+    file_path = "{path}/{file}".format(path=save_path, file=name)
+    upload.save(file_path)
+
+    print name,save_path
+    return json.dumps({'link': '/static/img/upload/'+str(name)})
+
+@admin1_ctrl.route('/create-news-submit', methods=['GET', 'POST'])
+def create_news_submit():
+    error = None
+    if session.get('logged_in_admin') is None:
+        return redirect('/admin/login')
+    if request.method == 'POST':
+        content = request.form['content']
+        title = request.form['title']
+        thumb = request.form['thumb']
+
+        datas = {
+            'content':  content,
+            'date_added' : datetime.utcnow(),
+            'status': 0,
+            'title' : title,
+            'thumb' : thumb
+        }
+        db.news.insert(datas)
+        
+        return json.dumps({'complete': True})
+
+@admin1_ctrl.route('/news-remove/<id>', methods=['GET', 'POST'])
+def remove_remove(id):
+    error = None
+    if session.get('logged_in_admin') is None:
+        return redirect('/admin/login')
+
+    db.news.remove({'_id' : ObjectId(id)})
+
+    return redirect('/admin/news')
+
+@admin1_ctrl.route('/news-edit/<ids>', methods=['GET', 'POST'])
+def news_edit(ids):
+    error = None
+   
+    if session.get('logged_in_admin') is None:
+        return redirect('/admin/login')
+    
+
+    news = db.news.find_one({'_id' : ObjectId(ids)})
+
+    data ={
+        'ids' : ids,
+        'news' : news,
+        'menu' : 'news'
+    }
+    return render_template('admin/edit-news.html', data=data)
+
+@admin1_ctrl.route('/edit-news-submit/<ids>', methods=['GET', 'POST'])
+def edit_news_submit(ids):
+    error = None
+    if session.get('logged_in_admin') is None:
+        return redirect('/admin/login')
+    if request.method == 'POST':
+        content = request.form['content']
+        title = request.form['title']
+        thumb = request.form['thumb']
+
+
+        db.news.update({'_id' : ObjectId(ids)},{'$set' : {
+            'content' : content,
+            'title' : title,
+            'thumb' : thumb
+        }})
+        
+        return json.dumps({'complete': True})
 
 @admin1_ctrl.route('/create-notifications', methods=['GET', 'POST'])
 def create_notifications():
