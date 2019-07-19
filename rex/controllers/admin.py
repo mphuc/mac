@@ -185,24 +185,23 @@ def create_news():
 
 @admin1_ctrl.route('/upload_image', methods=['GET', 'POST'])
 def upload_image():
-    if session.get('logged_in') is None:
-        return redirect('/auth/login')
+    if session.get('logged_in_admin') is not None:
+        
     
-    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-    
-    upload     = request.files.get('file')
-    
-    save_path = SITE_ROOT+'/../static/img/upload'.format(category='category')
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
+        SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+        
+        upload     = request.files.get('file')
+        
+        save_path = SITE_ROOT+'/../static/img/upload'.format(category='category')
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
 
 
-    name = id_generator(25)+upload.filename
-    file_path = "{path}/{file}".format(path=save_path, file=name)
-    upload.save(file_path)
+        name = id_generator(25)+upload.filename
+        file_path = "{path}/{file}".format(path=save_path, file=name)
+        upload.save(file_path)
 
-    print name,save_path
-    return json.dumps({'link': '/static/img/upload/'+str(name)})
+        return json.dumps({'link': '/static/img/upload/'+str(name)})
 
 @admin1_ctrl.route('/create-news-submit', methods=['GET', 'POST'])
 def create_news_submit():
