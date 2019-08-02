@@ -504,7 +504,8 @@ def news_items_history():
 
 @app.route('/marks')
 def news_items_marks():
-    data = {"id":[0,1,2,3,4,5],"time":[1564704000,1564358400,1564099200,1564099200,1563408000,1562112000],"color":["red","blue","green","red","blue","green"],"text":["Today","4 days back","7 days back + Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.","7 days back once again","15 days back","30 days back"],"label":["A","B","CORE","D","EURO","F"],"labelFontColor":["white","white","red","#FFFFFF","white","#000"],"minSize":[14,28,7,40,7,14]}
+    if request.args.get("symbol") == 'AAPL' and request.args.get("from") == '1496669400' and request.args.get("to") == '1522157400' and request.args.get("resolution") == 'D':
+        data = {"id":[0,1,2,3,4,5],"time":[1564704000,1564358400,1564099200,1564099200,1563408000,1562112000],"color":["red","blue","green","red","blue","green"],"text":["Today","4 days back","7 days back + Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.","7 days back once again","15 days back","30 days back"],"label":["A","B","CORE","D","EURO","F"],"labelFontColor":["white","white","red","#FFFFFF","white","#000"],"minSize":[14,28,7,40,7,14]}
     return  json.dumps(data)
 @app.route('/timescale_marks')
 def news_items_timescale_marks():
