@@ -27,7 +27,7 @@
 					debug: false,
 			        fullscreen: true,
 			        
-			        //drawings_access: { type: 'black', tools: [{ name: "Regression Trend" }] },
+			        drawings_access: { type: 'black', tools: [{ name: "Regression Trend" }] },
 
 					symbol: 'AAPL',
 					interval: 'D',
@@ -44,10 +44,10 @@
 					charts_storage_api_version: "1.1",
 					client_id: 'tradingview.com',
 					user_id: 'public_user_id',
-					theme: getParameterByName('theme'),
+					theme: 'Dark',
 					favorites: {
-						intervals: ["1D", "3D", "3W", "W", "M"],
-						chartTypes: ["Area", "Line"]
+						intervals: ["1", "3", "5", "15", "30", "1D", "1W", "1M"],
+						//chartTypes: ["Area", "Line"]
 					},
 					overrides: {
 			            //"scalesProperties.scales.topMargin": 15
@@ -57,13 +57,13 @@
 			            "paneProperties.legendProperties.showOnlyPriceSource": false
 			            //"mainSeriesProperties.style": 8,
 			        },
-			        loading_screen: {
+			        /*loading_screen: {
 			            backgroundColor:  "#222222" 
 			        },
 			        
 					"theme": "Dark",
 				  
-				  	"toolbar_bg": "rgba(0, 0, 0, 1)",
+				  	"toolbar_bg": "rgba(0, 0, 0, 1)",*/
 				  	
 				});
 				
