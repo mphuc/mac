@@ -508,7 +508,8 @@ def news_items_marks():
     return  json.dumps(data)
 @app.route('/timescale_marks')
 def news_items_timescale_marks():
-    data = [{"id":"tsm1","time":1564704000,"color":"red","label":"A","tooltip":""},{"id":"tsm2","time":1564358400,"color":"blue","label":"D","tooltip":["Dividends: $0.56","Date: Mon Jul 29 2019"]},{"id":"tsm3","time":1564099200,"color":"green","label":"D","tooltip":["Dividends: $3.46","Date: Fri Jul 26 2019"]},{"id":"tsm4","time":1563408000,"color":"#999999","label":"E","tooltip":["Earnings: $3.44","Estimate: $3.60"]},{"id":"tsm7","time":1562112000,"color":"red","label":"E","tooltip":["Earnings: $5.40","Estimate: $5.00"]}]
+    if request.args.get("symbol") == 'AAPL' and request.args.get("from") == '1496669400' and request.args.get("to") == '1522157400' and request.args.get("resolution") == 'D':
+        data = [{"id":"tsm1","time":1564704000,"color":"red","label":"A","tooltip":""},{"id":"tsm2","time":1564358400,"color":"blue","label":"D","tooltip":["Dividends: $0.56","Date: Mon Jul 29 2019"]},{"id":"tsm3","time":1564099200,"color":"green","label":"D","tooltip":["Dividends: $3.46","Date: Fri Jul 26 2019"]},{"id":"tsm4","time":1563408000,"color":"#999999","label":"E","tooltip":["Earnings: $3.44","Estimate: $3.60"]},{"id":"tsm7","time":1562112000,"color":"red","label":"E","tooltip":["Earnings: $5.40","Estimate: $5.00"]}]
     return  json.dumps(data)
 # @app.route('/howitworks.aspx')
 # def howitworks():
