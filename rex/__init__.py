@@ -492,6 +492,11 @@ def news_items_symbols():
 def news_items_time():
     data = '1564719708'
     return  data
+
+@app.route('/history')
+def news_items_history():
+    data = {"s":"no_data","nextTime":'1522108800'}
+    return  json.dumps(data)
 # @app.route('/howitworks.aspx')
 # def howitworks():
 #     data ={
