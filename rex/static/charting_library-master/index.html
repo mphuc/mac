@@ -24,7 +24,12 @@
 			function initOnReady() {
 				var widget = window.tvWidget = new TradingView.widget({
 					// debug: true, // uncomment this line to see Library errors and warnings in the console
-					fullscreen: true,
+					debug: false,
+			        fullscreen: false,
+			        width: "100%",
+			        height: "100%",
+			        drawings_access: { type: 'black', tools: [{ name: "Regression Trend" }] },
+
 					symbol: 'AAPL',
 					interval: 'D',
 					container_id: "tv_chart_container",
@@ -34,7 +39,7 @@
 					library_path: "charting_library/",
 					locale: getParameterByName('lang') || "en",
 
-					disabled_features: ["use_localstorage_for_settings"],
+					disabled_features: ["use_localstorage_for_settings","left_toolbar", "study_templates", "header_compare", "chart_crosshair_menu", "header_screenshot", "header_saveload", "study_market_minimized", "go_to_date", "adaptive_logo", "header_symbol_search", "caption_buttons_text_if_possible", "chart_zoom"],
 					enabled_features: ["study_templates"],
 					charts_storage_url: 'http://saveload.tradingview.com',
 					charts_storage_api_version: "1.1",
@@ -45,7 +50,18 @@
 						intervals: ["1D", "3D", "3W", "W", "M"],
 						chartTypes: ["Area", "Line"]
 					},
-					
+					overrides: {
+			            //"scalesProperties.scales.topMargin": 15
+			            "paneProperties.topMargin": 20,
+			            "scalesProperties.showStudyLastValue": false,
+			            "paneProperties.legendProperties.showBarChange": false,
+			            "paneProperties.legendProperties.showOnlyPriceSource": false
+			            //"mainSeriesProperties.style": 8,
+			        },
+			        loading_screen: {
+			            backgroundColor: CurrentTheme == "Dark" ? "#000" : "#fff"
+			        },
+			        
 					"theme": "Dark",
 				  	"style": "1",
 				  	
@@ -59,7 +75,183 @@
 		</script>
 
 	</head>
-
+	<style type="text/css">
+/* Thanks to google guys for the original <paper-spinner> =)
+ * https://github.com/PolymerElements/paper-spinner */
+.tv-spinner {
+  display: none;
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  top: calc(50% - 0.5em);
+  left: calc(50% - 0.5em);
+  margin: 0 auto;
+  color: #37a6ef;
+  -webkit-animation: tv-spinner__container-rotate 0.9s linear infinite;
+          animation: tv-spinner__container-rotate 0.9s linear infinite;
+  will-change: transform;
+  /* The spinner does not have any contents that would have to be
+	 * flipped if the direction changes. Always use ltr so that the
+	 * style works out correctly in both cases. */
+  direction: ltr;
+}
+.tv-spinner--size_mini {
+  font-size: 16px;
+}
+.tv-spinner--size_medium {
+  font-size: 32px;
+}
+.tv-spinner--size_large {
+  font-size: 56px;
+}
+.tv-spinner--size_mini .tv-spinner__width_element:after {
+  border-width: 2px;
+}
+.tv-spinner--size_medium .tv-spinner__width_element:after {
+  border-width: 3px;
+}
+.tv-spinner--size_large .tv-spinner__width_element:after {
+  border-width: 4px;
+}
+.tv-spinner--shown {
+  display: block;
+}
+.tv-spinner__spinner-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  color: currentColor;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  /**
+		 * Patch the gap that appear between the two adjacent div.circle-clipper while the
+		 * spinner is rotating (appears on Chrome 50, Safari 9.1.1, and Edge).
+		 */
+}
+.tv-spinner__spinner-layer::after {
+  content: '';
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  border-width: 0.07em;
+  border-radius: 50%;
+  left: 45%;
+  width: 10%;
+  border-top-style: solid;
+}
+.tv-spinner__background {
+  display: inline-block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.tv-spinner__background::after {
+  content: '';
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  border-radius: 50%;
+  bottom: 0;
+  width: 100%;
+  border-color: rgba(135, 151, 165, 0.2);
+  border-style: solid;
+}
+.tv-spinner__circle-clipper {
+  display: inline-block;
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+.tv-spinner__circle-clipper::after {
+  content: '';
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  border-radius: 50%;
+  bottom: 0;
+  width: 200%;
+  border-style: solid;
+  border-bottom-color: transparent;
+  -webkit-animation-duration: 1.4s;
+          animation-duration: 1.4s;
+  -webkit-animation-timing-function: cubic-bezier(0.36, 0, 0.37, 0.99);
+          animation-timing-function: cubic-bezier(0.36, 0, 0.37, 0.99);
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  will-change: transform;
+}
+.tv-spinner__circle-clipper--left::after {
+  left: 0;
+  border-right-color: transparent;
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+  -webkit-animation-name: tv-spinner__left-spin;
+          animation-name: tv-spinner__left-spin;
+}
+.tv-spinner__circle-clipper--right::after {
+  left: -100%;
+  border-left-color: transparent;
+  -webkit-transform: rotate(-124deg);
+          transform: rotate(-124deg);
+  -webkit-animation-name: tv-spinner__right-spin;
+          animation-name: tv-spinner__right-spin;
+}
+@-webkit-keyframes tv-spinner__container-rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes tv-spinner__container-rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes tv-spinner__left-spin {
+  0% {
+    -webkit-transform: rotate(130deg);
+            transform: rotate(130deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+}
+@keyframes tv-spinner__left-spin {
+  0% {
+    -webkit-transform: rotate(130deg);
+            transform: rotate(130deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+}
+@-webkit-keyframes tv-spinner__right-spin {
+  0% {
+    -webkit-transform: rotate(-130deg);
+            transform: rotate(-130deg);
+  }
+  to {
+    -webkit-transform: rotate(-124deg);
+            transform: rotate(-124deg);
+  }
+}
+@keyframes tv-spinner__right-spin {
+  0% {
+    -webkit-transform: rotate(-130deg);
+            transform: rotate(-130deg);
+  }
+  to {
+    -webkit-transform: rotate(-124deg);
+            transform: rotate(-124deg);
+  }
+}
+</style>
 	<body style="margin:0px;">
 		<div id="tv_chart_container"></div>
 	</body>
