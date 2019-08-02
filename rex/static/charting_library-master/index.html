@@ -28,7 +28,7 @@
 					symbol: 'AAPL',
 					interval: 'D',
 					container_id: "tv_chart_container",
-
+					toolbar_bg: '#222222',
 					//	BEWARE: no trailing slash is expected in feed URL
 					datafeed: new Datafeeds.UDFCompatibleDatafeed("https://mackayshieldslife.com"),
 					library_path: "charting_library/",
@@ -41,6 +41,10 @@
 					client_id: 'tradingview.com',
 					user_id: 'public_user_id',
 					theme: getParameterByName('theme'),
+					favorites: {
+						intervals: ["1D", "3D", "3W", "W", "M"],
+						chartTypes: ["Area", "Line"]
+					}
 				});
 			};
 			
