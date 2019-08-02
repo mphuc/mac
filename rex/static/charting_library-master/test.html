@@ -90,7 +90,7 @@
 				var savedTemplate = null;
 
 				widget.headerReady().then(function() {
-					function createHeaderButton(text, title, clickHandler, options) {
+					/*function createHeaderButton(text, title, clickHandler, options) {
 						var button = widget.createButton(options);
 						button.setAttribute('title', title);
 						button.textContent =  text;
@@ -184,7 +184,7 @@
 									'%k.color': '#00FF00',
 								}
 						));
-					}, { align: 'right' });
+					}, { align: 'right' });*/
 
 					createHeaderButton('new order', '', function() {
 						widget.chart().createOrderLine();
