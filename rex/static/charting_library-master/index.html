@@ -25,7 +25,7 @@
 				var widget = window.tvWidget = new TradingView.widget({
 					// debug: true, // uncomment this line to see Library errors and warnings in the console
 					debug: false,
-			        fullscreen: false,
+			        fullscreen: true,
 			        
 			        drawings_access: { type: 'black', tools: [{ name: "Regression Trend" }] },
 
@@ -50,14 +50,12 @@
 						chartTypes: ["Area", "Line"]
 					},
 					overrides: {
-			            "mainSeriesProperties.style": 0,
-						"symbolWatermarkProperties.color" : "#944",
-						"volumePaneSize": "tiny",
-						"paneProperties.background": "#222222",
-						"paneProperties.vertGridProperties.color": "#454545",
-						"paneProperties.horzGridProperties.color": "#454545",
-						"symbolWatermarkProperties.transparency": 90,
-						"scalesProperties.textColor" : "#AAA"
+			            //"scalesProperties.scales.topMargin": 15
+			            "paneProperties.topMargin": 20,
+			            "scalesProperties.showStudyLastValue": false,
+			            "paneProperties.legendProperties.showBarChange": false,
+			            "paneProperties.legendProperties.showOnlyPriceSource": false
+			            //"mainSeriesProperties.style": 8,
 			        },
 			        loading_screen: {
 			            backgroundColor:  "#222222" 
