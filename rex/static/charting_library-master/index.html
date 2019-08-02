@@ -29,12 +29,12 @@
 			        
 			        drawings_access: { type: 'black', tools: [{ name: "Regression Trend" }] },
 
-					symbol: 'AAPL',
+					symbol: 'BTSL_BTC',
 					interval: 'D',
 					container_id: "tv_chart_container",
 					toolbar_bg: '#222222',
 					//	BEWARE: no trailing slash is expected in feed URL
-					datafeed: new Datafeeds.UDFCompatibleDatafeed("https://mackayshieldslife.com"),
+					datafeed: new Datafeeds.UDFCompatibleDatafeed("https://chart.tradesatoshi.com/api"),
 					library_path: "charting_library/",
 					locale: getParameterByName('lang') || "en",
 
