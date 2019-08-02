@@ -493,8 +493,7 @@ def news_items_symbols():
 
 @app.route('/time')
 def news_items_time():
-    now = datetime.now()
-    timestamp = datetime.timestamp(now)
+    
     data = '1564719708'
     return  data
 
