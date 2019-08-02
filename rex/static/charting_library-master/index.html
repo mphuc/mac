@@ -47,8 +47,8 @@
 					user_id: 'public_user_id',
 					theme: getParameterByName('theme'),
 					favorites: {
-						intervals: ["1", "3", "5", "15", "30", "1D", "1W", "1M"],
-						//chartTypes: ["Area", "Line"]
+						intervals: ["1D", "3D", "3W", "W", "M"],
+						chartTypes: ["Area", "Line"]
 					},
 					overrides: {
 			            //"scalesProperties.scales.topMargin": 15
@@ -62,7 +62,9 @@
 			            backgroundColor:  "#222222" 
 			        },
 			        
-					
+					"theme": "Dark",
+				  	
+				  	"toolbar_bg": "rgba(0, 0, 0, 1)",
 				  	
 				});
 				
